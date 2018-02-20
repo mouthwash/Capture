@@ -1,5 +1,2 @@
 # Product Framework
-This application is intended to be a note taking app, that incentivizes its use. Our problem will solve the issue of students
-not taking their notes in class due to getting sidetracked or being lazy by giving them motivation to use the app by providing tasks
-and rewards for their actions in the application. We know our product works when we see users completing multiple goals, because that
-means they are using the app and efficiently taking notes.
+This application is intended to be a note taking smartphone app that incentivizes its use with a reward system. Many people have trouble recalling little details about things that happen in their daily lives. Our app will provide and simple, user-friendly way to quickly make a note of important details such as someone's name, the location of a birthday party, details of a friendly get-together, or even important terms and concepts students come across in class. We will know our product is working when we see users reaching a few simple milestones set as part of the reward system.
