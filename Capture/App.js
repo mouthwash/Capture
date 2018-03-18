@@ -1,4 +1,4 @@
-//Have fun bois
+
 import React, { Component } from 'react';
 import {
   Platform,
@@ -10,10 +10,9 @@ import {
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          React Native working boiiissss Hit R on your Keyboard
-          Twice to reload the app if you're using the emulator!
+      <View>
+        <Text>
+            This is the home screen.
         </Text>
       </View>
     );
