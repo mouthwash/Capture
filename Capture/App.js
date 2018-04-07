@@ -6,32 +6,19 @@ import {
   Text,
   View
 } from 'react-native';
+import NewNote from './src/components/NewNote';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './src/reducers';
 
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          React Native working boiiissss Hit R on your Keyboard
-          Twice to reload the app if you're using the emulator!
-        </Text>
-      </View>
+      <Provider store={createStore(reducers)}>
+        <View>
+          <NewNote></NewNote>
+        </View>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#B9E0F5',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    fontFamily: 'Verdana',
-    margin: 10,
-    color: '#5C707A'
-  },
-});
