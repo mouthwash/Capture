@@ -10,7 +10,8 @@ import {
   FooterTab,
   Button,
   Icon,
-  Text
+  Text,
+  Content
 } from 'native-base';
 import { noteChanged } from '../actions';
 import { updateNotePane, deleteNotePane, queryAllNotePanes } from '../database/allSchemas';
@@ -35,45 +36,40 @@ class NewNote extends Component {
             </Button>
           </Right>
         </Header>
-
-        <TextInput
-          style={styles.inputStyle}
-          multiline
-          autoFocus
-          autoCo
-          underlineColorAndroid='transparent'
-          autoCorrect={false}
-          onChangeText={this.onNoteChange.bind(this)}
-          value={this.props.note}
-        />
-        <Footer>
-          <FooterTab>
-            <Button>
-              <Text>Delete</Text>
+        <Content>
+          <TextInput
+            style={styles.inputStyle}
+            multiline
+            autoFocus
+            autoCo
+            underlineColorAndroid='transparent'
+            autoCorrect={false}
+            onChangeText={this.onNoteChange.bind(this)}
+            value={this.props.note}
+          />
+        </Content>
+        <Footer style={styles.footerStyle}>
+          <FooterTab style={styles.footerStyle}>
+            <Button transparent>
+              <Text>Done</Text>
             </Button>
-            <Button>
+            <Button transparent>
               <Text>Draw</Text>
             </Button>
-            <Button>
+            <Button transparent>
               <Text>Add Picture</Text>
             </Button>
-            <Button>
+            <Button transparent>
               <Text>Create New</Text>
             </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
+          </FooterTab >
+          </Footer>
+       </Container>
     );
   }
 }
 
 const styles = {
-  container: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    backgroundColor: '#BBDEFB',
-    maxHeight: '100%'
-  },
   headerStyle: {
     backgroundColor: 'transparent',
     elevation: 0
@@ -81,16 +77,17 @@ const styles = {
   inputStyle: {
     textAlignVertical: 'top',
     fontSize: 20,
-    paddingTop: 50,
     paddingLeft: 15,
     paddingRight: 15,
-    width: '100%',
-    height: Dimensions.get('window').height - 75
   },
   iconStyle: {
     color: 'rgb(0,122,255)'
-  }
+  },
+  footerStyle: {
+    backgroundColor: 'transparent',
+  },
 };
+
 const mapStateToProps = state => {
   return {
     note: state.noteChange.note
