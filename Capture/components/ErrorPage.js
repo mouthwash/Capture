@@ -33,7 +33,7 @@ export default class ErrorPage extends Component {
       <View>
         <Card
           title='HELLO WORLD'
-          image={require("/Users/DAN/Documents/local_code/react_native_init/capture/Capture/components/img/fail_whale.jpg")}>
+          image={require("./img/fail_whale.jpg")}>
           <Text style={{marginBottom: 10}}>
             The idea with React Native Elements is more about component structure than actual design.
           </Text>
