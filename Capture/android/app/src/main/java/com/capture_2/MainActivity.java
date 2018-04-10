@@ -1,4 +1,4 @@
-package com.capture;
+package com.capture_2;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "Capture";
+        return "capture_2";
     }
 }
