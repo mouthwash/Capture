@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { TextInput, Dimensions } from 'react-native';
+import { TextInput } from 'react-native';
 import {
   Container,
   Header,
@@ -13,14 +12,17 @@ import {
   Text,
   Content
 } from 'native-base';
-import { noteChanged } from '../actions';
-import { updateNotePane, deleteNotePane, queryAllNotePanes } from '../database/allSchemas';
-import realm from '../database/allSchemas';
+import { StackNavigator } from 'react-navigation';
+import realm, { updateNotePane, deleteNotePane, queryAllNotePanes } from '../database/allSchemas';
 
-class NewNote extends Component {
-  onNoteChange(text) {
-    this.props.noteChanged(text);
+export default class NewNote extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ''
+    };
   }
+
   render() {
     return (
       <Container>
@@ -41,16 +43,19 @@ class NewNote extends Component {
             style={styles.inputStyle}
             multiline
             autoFocus
-            autoCo
+            autoCorrect
             underlineColorAndroid='transparent'
             autoCorrect={false}
-            onChangeText={this.onNoteChange.bind(this)}
-            value={this.props.note}
+            onChangeText={text => this.setState({ text })}
+            value={this.state.text}
           />
         </Content>
         <Footer style={styles.footerStyle}>
           <FooterTab style={styles.footerStyle}>
-            <Button transparent>
+            <Button
+              transparent
+              onPress={null}
+            >
               <Text>Done</Text>
             </Button>
             <Button transparent>
@@ -87,11 +92,3 @@ const styles = {
     backgroundColor: 'transparent',
   },
 };
-
-const mapStateToProps = state => {
-  return {
-    note: state.noteChange.note
-  };
-};
-
-export default connect(mapStateToProps, { noteChanged })(NewNote);
