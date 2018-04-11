@@ -20,21 +20,17 @@ import HomeScreen from './components/HomeScreen';
 import HelloWorld from './components/HelloWorld';
 import ErrorPage from './components/ErrorPage';
 import MyHeader from './components/MyHeader.js';
+import NotePanes from './components/NotePanes.js';
+import NewNote from './components/NewNote.js';
 
 const RootStack = StackNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-    },
-    Error_Page: {
-      screen: ErrorPage,
-    },
-    Hello_Page: {
-      screen: HelloWorld,
-    },
+    Note_Panes: {screen: NotePanes},
+    New_Note_Template: {screen: NewNote},
+    Home: {screen: HomeScreen},
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Note_Panes',
   }
 );
 
