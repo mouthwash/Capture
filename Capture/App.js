@@ -24,13 +24,13 @@ import MyHeader from './components/MyHeader.js';
 const RootStack = StackNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: HomeScreen, navigationOptions: { header: null }
     },
     Error_Page: {
-      screen: ErrorPage,
+      screen: ErrorPage, navigationOptions: { header: null }
     },
     Hello_Page: {
-      screen: HelloWorld,
+      screen: HelloWorld, navigationOptions: { header: null }
     },
   },
   {
