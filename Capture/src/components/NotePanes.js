@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { StackNavigator } from 'react-navigation';
 import {
   Card,
   CardItem,
@@ -11,8 +12,13 @@ import {
   Title,
   Content,
   Left,
+  Right,
+  Center,
+  Icon,
   Button
 } from 'native-base';
+import NewNote from './NewNote';
+
 
 export default class NotePanes extends Component {
   constructor(props) {
@@ -30,48 +36,57 @@ export default class NotePanes extends Component {
   renderItem({ item, index }) {
     return (
       <Card style={styles.cardStyle}>
+        <Header style={styles.headerStyle}>
+            <Left style={styles.positionStyle}>
+                <Button transparent>
+                  <Icon type='Feather' name='menu' />
+                </Button>
+            </Left>
+            <Body style={styles.positionStyle}>
+                <Button transparent>
+                    <Text>{item.name}</Text>
+                </Button>
+            </Body>
+            <Right style={styles.positionStyle}>
+                <Button
+                  transparent
+                  onPress={() => this.props.navigation.navigate('NewNote')}
+                >
+                <Icon type='Feather' name='plus' />
+                </Button>
+            </Right>
+        </Header>
         <Content>
-        <CardItem
-          header
-          bordered
-          style={styles.headerItemStyle}
-        >
-        <Button transparent>
-            <Text style={styles.textStyle}>{item.name}</Text>
-          </Button>
-         </CardItem>
-         {
+        {
            item.notes.map((item2, index2) => {
              return (
                <CardItem
                  bordered
                  key={index2}
                >
-              <Body>
-                 <Text>
-                   {item2}
-                 </Text>
-               </Body>
+                  <Body>
+                      <Text>
+                         {item2}
+                      </Text>
+                  </Body>
                </CardItem>
-             );
+            );
            })
-         }
+        }
          </Content>
        </Card>
     );
   }
-
 
   render() {
     return (
       <Container>
         <Carousel
           data={this.state.dataset}
-          renderItem={this.renderItem}
+          renderItem={this.renderItem.bind(this)}
           itemWidth={Dimensions.get('window').width}
           sliderWidth={Dimensions.get('window').width}
         />
-      {this.pagination}
       </Container>
     );
   }
@@ -89,7 +104,9 @@ const styles = {
     marginTop: 0,
     marginBottom: 0,
   },
-  headerItemStyle: {
-    justifyContent: 'center',
+  headerStyle: {
+  },
+  positionStyle: {
+    flex: 1,
   },
 };
