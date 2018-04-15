@@ -6,19 +6,18 @@ import {
   View,
   Alert
 } from 'react-native';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
-import HomeScreen from './components/HomeScreen';
-import MyHeader from './components/MyHeader.js';
+import NotePanes from './src/components/NotePanes.js';
+import NewNote from './src/components/NewNote.js';
 
 const RootStack = StackNavigator(
 {
-    Home: {
-      screen: HomeScreen, navigationOptions: { header: null }
-    },
+    Panes: { screen: NotePanes, navigationOptions: { header: null } },
+    New:   { screen: NewNote, navigationOptions: { header: null } },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Panes',
   }
 );
 
