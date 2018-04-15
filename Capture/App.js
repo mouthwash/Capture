@@ -1,57 +1,17 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Alert
-} from 'react-native';
-import { Button } from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
-import NotePanes from './src/components/NotePanes.js';
-import NewNote from './src/components/NewNote.js';
+import NewNote from './src/components/NewNote';
+import NotePanes from './src/components/NotePanes';
 
-const RootStack = StackNavigator(
-{
-    Panes: { screen: NotePanes, navigationOptions: { header: null } },
-    New:   { screen: NewNote, navigationOptions: { header: null } },
-  },
-  {
-    initialRouteName: 'Panes',
-  }
-);
-
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
-      <RootStack />
+      <AppNavigator />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  heading: {
-    color: 'red',
-    fontSize: 60,
-    textAlign: 'center',
-    margin: 10,
-    paddingTop: 5,
-    borderWidth: 5,
-    borderColor: 'blue',
-    borderRadius:20,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  space: {
-    margin: 30,
-  }
+const AppNavigator = StackNavigator({
+  NotePanesScreen: { screen: NotePanes, navigationOptions: { header: null } },
+  NewNoteScreen:   { screen: NewNote, navigationOptions: { header: null } },
 });

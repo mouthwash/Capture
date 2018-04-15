@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { StackNavigator } from 'react-navigation';
 import {
   Card,
   CardItem,
@@ -9,15 +8,12 @@ import {
   Container,
   Header,
   Body,
-  Title,
   Content,
   Left,
   Right,
-  Center,
   Icon,
   Button
 } from 'native-base';
-import NewNote from './NewNote';
 
 
 export default class NotePanes extends Component {
@@ -44,13 +40,13 @@ export default class NotePanes extends Component {
             </Left>
             <Body style={styles.positionStyle}>
                 <Button transparent>
-                    <Text>{item.name}</Text>
+                    <Text style={styles.textStyle}>{item.name}</Text>
                 </Button>
             </Body>
             <Right style={styles.positionStyle}>
                 <Button
                   transparent
-                  onPress={() => this.props.navigation.navigate('NewNote')}
+                  onPress={() => this.props.navigation.navigate('NewNoteScreen')}
                 >
                 <Icon type='Feather' name='plus' />
                 </Button>
@@ -58,8 +54,7 @@ export default class NotePanes extends Component {
         </Header>
         <Content>
         {
-           item.notes.map((item2, index2) => {
-             return (
+           item.notes.map((item2, index2) => (
                <CardItem
                  bordered
                  key={index2}
@@ -70,8 +65,7 @@ export default class NotePanes extends Component {
                       </Text>
                   </Body>
                </CardItem>
-            );
-           })
+            ))
         }
          </Content>
        </Card>
@@ -95,6 +89,7 @@ export default class NotePanes extends Component {
 const styles = {
   textStyle: {
     fontSize: 20,
+    color: 'white',
   },
   cardStyle: {
     width: Dimensions.get('window').width,
