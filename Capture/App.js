@@ -12,6 +12,19 @@ export default class App extends Component {
 }
 
 const AppNavigator = StackNavigator({
-  NotePanesScreen: { screen: NotePanes, navigationOptions: { header: null } },
-  NewNoteScreen:   { screen: NewNote, navigationOptions: { header: null } },
+    NotePanesScreen: {
+        screen: NotePanes,
+        navigationOptions: {
+            header: null,
+            title: 'Home',
+        },
+    },
+    NewNoteScreen: {
+        screen: NewNote,
+        navigationOptions: ({ navigation }) => ({
+            header: null,
+            title: 'New note',
+        }),
+    },
+    initialRouteName: 'NotePanesScreen'
 });

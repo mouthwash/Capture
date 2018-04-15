@@ -15,7 +15,6 @@ import {
   Button
 } from 'native-base';
 
-
 export default class NotePanes extends Component {
   constructor(props) {
     super(props);
@@ -31,44 +30,45 @@ export default class NotePanes extends Component {
 
   renderItem({ item, index }) {
     return (
-      <Card style={styles.cardStyle}>
-        <Header style={styles.headerStyle}>
-            <Left style={styles.positionStyle}>
-                <Button transparent>
-                  <Icon type='Feather' name='menu' />
-                </Button>
-            </Left>
-            <Body style={styles.positionStyle}>
-                <Button transparent>
-                    <Text style={styles.textStyle}>{item.name}</Text>
-                </Button>
-            </Body>
-            <Right style={styles.positionStyle}>
-                <Button
-                  transparent
-                  onPress={() => this.props.navigation.navigate('NewNoteScreen')}
-                >
-                <Icon type='Feather' name='plus' />
-                </Button>
-            </Right>
-        </Header>
-        <Content>
-        {
-           item.notes.map((item2, index2) => (
-               <CardItem
-                 bordered
-                 key={index2}
-               >
-                  <Body>
-                      <Text>
-                         {item2}
-                      </Text>
-                  </Body>
-               </CardItem>
-            ))
-        }
-         </Content>
-       </Card>
+        <Card style={styles.cardStyle}>
+            <Header style={styles.headerStyle}>
+                <Left style={styles.positionStyle}>
+                    <Button transparent>
+                      <Icon type='Feather' name='menu' />
+                    </Button>
+                </Left>
+                <Body style={styles.positionStyle}>
+                    <Button transparent>
+                        <Text style={styles.textStyle}>{item.name}</Text>
+                    </Button>
+                </Body>
+                <Right style={styles.positionStyle}>
+                    <Button
+                      transparent
+                      onPress={() => this.props.navigation.navigate('NewNoteScreen')}
+                    >
+                    <Icon type='Feather' name='plus' />
+                    </Button>
+                </Right>
+            </Header>
+
+            <Content>
+            {
+               item.notes.map((item2, index2) => (
+                   <CardItem
+                     bordered
+                     key={index2}
+                    >
+                      <Body>
+                          <Text>
+                             {item2}
+                          </Text>
+                      </Body>
+                   </CardItem>
+                ))
+            }
+            </Content>
+        </Card>
     );
   }
 
@@ -89,7 +89,7 @@ export default class NotePanes extends Component {
 const styles = {
   textStyle: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
   },
   cardStyle: {
     width: Dimensions.get('window').width,
