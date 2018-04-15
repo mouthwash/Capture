@@ -25,13 +25,6 @@ export default class HomeScreen extends Component {
             HomeScreen
           </Text>
 
-        <View style={{margin: 20}}>
-          <Button
-            title='Go to Err'
-            onPress={() => this.props.navigation.navigate('Error_Page')}
-          />
-        </View>
-
         <View>
           <Button
             title='Go To HelloWorld'
