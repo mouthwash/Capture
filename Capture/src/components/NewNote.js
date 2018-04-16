@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, DatePickerIOS, DatePickerAndroid, View } from 'react-native';
 import {
   Container,
   Header,
@@ -19,69 +19,87 @@ export default class NewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: ''
+            date: new Date(),
+            showDatePicker: false   /* Initially hides date picker */
         };
+
+        this.setDate = this.setDate.bind(this);
     }
 
-  render() {
-    const {goBack} = this.props.navigation;
+    setDate(newDate) {
+        this.setState({date: newDate})
+    }
 
-    return (
-        <Container>
-            <Header style={styles.headerStyle}>
-                <Left>
-                    <Button
-                      transparent
-                      onPress={() => goBack()}
-                    >
-                      <Icon style={styles.iconStyle} name='arrow-back' />
-                    </Button>
-                </Left>
-                <Body>
-                    <Text style={styles.textStyle}>New Note</Text>
-                </Body>
-                <Right>
-                    /* Leave blank to maintain alignment of header on 'New Note' page */
-                </Right>
-            </Header>
-            <Content>
-                <TextInput
-                    style={styles.inputStyle}
-                    multiline
-                    autoFocus
-                    autoCorrect
-                    underlineColorAndroid='transparent'
-                    autoCorrect={false}
-                    onChangeText={text => this.setState({ text })}
-                    value={this.state.text}
-                />
-            </Content>
-            <Footer style={styles.footerStyle}>
-                <FooterTab style={styles.footerStyle}>
-                    <Button
-                        transparent
-                        onPress={null}
-                    >
-                        <Icon type='Feather' name='trash-2' />
-                    </Button>
+    render() {
+        const {goBack} = this.props.navigation;
 
-                    <Button transparent>
-                        <Icon type='Feather' name='edit-2' />
-                    </Button>
+        var showDatePicker = this.state.showDatePicker ?
+            <DatePickerIOS
+                style={ styles.datePicker }
+                date={this.state.date} onDateChange={(date)=>this.setState({date})}
+                mode="date"
+            /> : <View />
 
-                    <Button transparent>
-                        <Icon type='Feather' name='image' />
-                    </Button>
+        return (
+            <Container>
+                <Header style={styles.headerStyle}>
+                    <Left>
+                        <Button transparent
+                            onPress={() => goBack()}
+                        >
+                            <Icon style={styles.iconStyle} name='arrow-back' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text style={styles.textStyle}>New Note</Text>
+                    </Body>
+                    <Right >
+                        <Button
+                            transparent
+                            onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})}
+                        >
+                            <Icon type='Feather' name='clock' style={styles.iconStyle} />
+                        </Button>
+                    </Right>
+                </Header>
+                <Content>
+                    <TextInput
+                        style={styles.inputStyle}
+                        multiline
+                        autoFocus
+                        autoCorrect
+                        underlineColorAndroid='transparent'
+                        onChangeText={text => this.setState({ text })}
+                        value={this.state.text}
+                    />
+                </Content>
+                {showDatePicker} /* Date picker appears here but is initially hidden until clock is pressed */
+                <Footer style={styles.footerStyle}>
+                    <FooterTab style={styles.footerStyle}>
+                        <Button
+                            transparent
+                            onPress={null}
+                        >
+                            <Icon type='Feather' name='trash-2' />
+                        </Button>
 
-                    <Button transparent>
-                        <Icon type='Feather' name='check' />
-                    </Button>
+                        <Button transparent>
+                            <Icon type='Feather' name='edit-2' />
+                        </Button>
 
-                </FooterTab >
-            </Footer>
-        </Container>
-    );
-  }
+                        <Button transparent>
+                            <Icon type='Feather' name='image' />
+                        </Button>
+
+                        <Button transparent>
+                            <Icon type='Feather' name='check' />
+                        </Button>
+
+                    </FooterTab >
+                </Footer>
+            </Container>
+        );
+    }
 }
 
 const styles = {
@@ -102,5 +120,11 @@ const styles = {
     textStyle: {
         fontSize: 20,
         color: 'white',
+    },
+    datePicker: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: 150,
     }
 };
