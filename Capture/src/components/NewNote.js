@@ -5,6 +5,7 @@ import {
   Header,
   Left,
   Right,
+  Body,
   Footer,
   FooterTab,
   Button,
@@ -12,7 +13,6 @@ import {
   Text,
   Content
 } from 'native-base';
-import { StackNavigator } from 'react-navigation';
 import realm, { updateNotePane, deleteNotePane, queryAllNotePanes } from '../database/allSchemas';
 
 export default class NewNote extends Component {
@@ -24,18 +24,24 @@ export default class NewNote extends Component {
   }
 
   render() {
+    const {goBack} = this.props.navigation;
+
     return (
       <Container>
         <Header style={styles.headerStyle}>
           <Left>
-            <Button transparent>
+            <Button
+              transparent
+              onPress={() => goBack()}
+            >
               <Icon style={styles.iconStyle} name='arrow-back' />
             </Button>
           </Left>
+          <Body>
+            <Text style={styles.textStyle}>New Note</Text>
+          </Body>
           <Right>
-            <Button transparent>
-              <Icon style={styles.iconStyle} name='menu' color='blue' />
-            </Button>
+            /* Leave blank to maintain alignment of header on 'New Note' page */
           </Right>
         </Header>
         <Content>
@@ -51,32 +57,36 @@ export default class NewNote extends Component {
           />
         </Content>
         <Footer style={styles.footerStyle}>
-          <FooterTab style={styles.footerStyle}>
-            <Button
-              transparent
-              onPress={null}
-            >
-              <Text>Done</Text>
-            </Button>
-            <Button transparent>
-              <Text>Draw</Text>
-            </Button>
-            <Button transparent>
-              <Text>Add Picture</Text>
-            </Button>
-            <Button transparent>
-              <Text>Create New</Text>
-            </Button>
-          </FooterTab >
-          </Footer>
-       </Container>
+            <FooterTab style={styles.footerStyle}>
+                <Button
+                  transparent
+                  onPress={null}
+                >
+                    <Icon type='Feather' name='trash-2' />
+                </Button>
+
+                <Button transparent>
+                    <Icon type='Feather' name='edit-2' />
+                </Button>
+
+                <Button transparent>
+                    <Icon type='Feather' name='image' />
+                </Button>
+
+                <Button transparent>
+                    <Icon type='Feather' name='check' />
+                </Button>
+
+            </FooterTab >
+        </Footer>
+      </Container>
     );
   }
 }
 
 const styles = {
   headerStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#06317c',
     elevation: 0
   },
   inputStyle: {
@@ -86,9 +96,10 @@ const styles = {
     paddingRight: 15,
   },
   iconStyle: {
-    color: 'rgb(0,122,255)'
+    color: 'white'
   },
-  footerStyle: {
-    backgroundColor: 'transparent',
-  },
+  textStyle: {
+      fontSize: 20,
+      color: 'white'
+  }
 };
