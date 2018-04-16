@@ -41,7 +41,7 @@ export default class NewNote extends Component {
             <Text style={styles.textStyle}>New Note</Text>
           </Body>
           <Right>
-
+            /* Leave blank to maintain alignment of header on 'New Note' page */
           </Right>
         </Header>
         <Content>
