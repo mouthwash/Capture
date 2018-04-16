@@ -6,11 +6,11 @@ import NotePanes from './src/components/NotePanes';
 import NewPane from './src/components/NewPaneTemplate';
 
 export default class App extends Component {
-  render() {
-    return (
-      <AppNavigator />
-    );
-  }
+    render() {
+        return (
+            <AppNavigator />
+        );
+    }
 }
 
 const AppNavigator = StackNavigator({
