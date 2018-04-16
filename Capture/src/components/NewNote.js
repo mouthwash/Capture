@@ -5,6 +5,7 @@ import {
   Header,
   Left,
   Right,
+  Body,
   Footer,
   FooterTab,
   Button,
@@ -36,10 +37,11 @@ export default class NewNote extends Component {
               <Icon style={styles.iconStyle} name='arrow-back' />
             </Button>
           </Left>
+          <Body>
+            <Text style={styles.textStyle}>New Note</Text>
+          </Body>
           <Right>
-            <Button transparent>
-              <Icon style={styles.iconStyle} name='menu' color='blue' />
-            </Button>
+
           </Right>
         </Header>
         <Content>
@@ -60,19 +62,19 @@ export default class NewNote extends Component {
                   transparent
                   onPress={null}
                 >
-                    <Text>Done</Text>
+                    <Icon type='Feather' name='trash-2' />
                 </Button>
 
                 <Button transparent>
-                    <Text>Draw</Text>
+                    <Icon type='Feather' name='edit-2' />
                 </Button>
 
                 <Button transparent>
-                    <Text>Add Picture</Text>
+                    <Icon type='Feather' name='image' />
                 </Button>
 
                 <Button transparent>
-                    <Text>Create New</Text>
+                    <Icon type='Feather' name='check' />
                 </Button>
 
             </FooterTab >
@@ -84,7 +86,7 @@ export default class NewNote extends Component {
 
 const styles = {
   headerStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#06317c',
     elevation: 0
   },
   inputStyle: {
@@ -94,9 +96,10 @@ const styles = {
     paddingRight: 15,
   },
   iconStyle: {
-    color: 'rgb(0,122,255)'
+    color: 'white'
   },
-  footerStyle: {
-    backgroundColor: 'transparent',
-  },
+  textStyle: {
+      fontSize: 20,
+      color: 'white'
+  }
 };
