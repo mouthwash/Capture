@@ -3,10 +3,7 @@ package com.capture_2;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-<<<<<<< HEAD:Capture/android/app/src/main/java/com/capture_2/MainApplication.java
-=======
 import io.realm.react.RealmReactPackage;
->>>>>>> Amar:Capture/android/app/src/main/java/com/capture/MainApplication.java
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -28,10 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-<<<<<<< HEAD:Capture/android/app/src/main/java/com/capture_2/MainApplication.java
-=======
             new RealmReactPackage(),
->>>>>>> Amar:Capture/android/app/src/main/java/com/capture/MainApplication.java
             new VectorIconsPackage()
       );
     }
