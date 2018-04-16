@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { Dimensions, Alert, TouchableOpacity } from 'react-native';
+import { Dimensions, Alert } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Tabs from 'react-native-tabs';
 import {
-  Card,
-  CardItem,
-  Text,
-  Container,
-  Header,
-  Body,
-  Content,
-  Left,
-  Right,
-  Icon,
-  Button
+    Card,
+    CardItem,
+    Text,
+    Container,
+    Header,
+    Body,
+    Content,
+    Left,
+    Right,
+    Icon,
+    Button
 } from 'native-base';
 
 export default class NotePanes extends Component {
-   constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             dataset: [
@@ -55,15 +55,15 @@ export default class NotePanes extends Component {
 
                 <Content>
                 {
-                   item.notes.map((item2, index2) => (
-                       <CardItem
+                    item.notes.map((item2, index2) => (
+                        <CardItem
                             bordered
                             key={index2}
                         >
                             <Body>
                                 <Text>{item2}</Text>
                             </Body>
-                       </CardItem>
+                        </CardItem>
                     ))
                 }
                 </Content>
