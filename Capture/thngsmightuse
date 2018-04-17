@@ -1,0 +1,142 @@
+export const insertNewNote = () => new Promise((resolve, reject) => {
+  Realm.open(databaseOptions).then(realm => {
+    const allNotes
+  })
+});
+
+changedPane = (id) => {
+  this.state.dataset.map((item) => {
+    if(id == item.id) {
+      this.setState({paneName: item.name})
+    }
+  }
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~OLDATASBASEFNCTIONS~~~``
+
+insertNewNotePane(newPane).then().catch(() => {
+  Alert('Insert new todoList error');
+ });
+
+ export const updateNotePane = notePane => new Promise((resolve, reject) => {
+   Realm.open(databaseOptions).then(realm => {
+     realm.write(() => {
+       const updatingNotePane = realm.objectForPrimaryKey(NOTEPANE_SCHEMA, notePane.id);
+       updatingNotePane.paneName = notePane.paneName;
+       resolve();
+     });
+   }).catch((error) => reject(error));
+ });
+
+ export const deleteNotePane = notePaneId => new Promise((resolve, reject) => {
+   Realm.open(databaseOptions).then(realm => {
+     realm.write(() => {
+       const deletingNotePane = realm.objectForPrimaryKey(NOTEPANE_SCHEMA, notePaneId);
+       realm.delete(deletingNotePane);
+       resolve();
+     });
+   }).catch((error) => reject(error));
+ });
+
+ export const deleteAllPanes = () => new Promise((resolve, reject) => {
+   Realm.open(databaseOptions).then(realm => {
+     realm.write(() => {
+       const allNotePanes = realm.objects(NOTEPANE_SCHEMA); //query all NOTEPANE_SCHEMA
+       realm.delete(allNotePanes);
+       resolve();
+     });
+   }).catch((error) => reject(error));
+ });
+
+ export const insertNewNote = newNote => new Promise((resolve, reject) => {
+   Realm.open(databaseOptions).then(realm => {
+     realm.write(() => {
+       realm.create(NOTE_SCHEMA, newNote);
+
+       resolve(newNote); //if successful resolve called
+     });
+   }).catch((error) => reject(error)); // if not successful reject called
+ });
+
+
+ //~~~~~~~~~~~~~~~~~~~olddataset
+ dataset: [
+   { id: 0, name: 'Urgent', notes: ['Hi', 'Ok Its Not Bad'] },
+   { id: 1, name: 'School', notes: [] },
+   { id: 2, name: 'Useless Things', notes: [] },
+   { id: 3, name: 'Even more Useless', notes: [] }
+ ],
+
+ export const getNotePanes = async () => {
+   try {
+     const Panes = await realm.objects(NOTEPANE_SCHEMA);
+     return Panes;
+   } catch (err) {
+     console.log('~~~~~~~~~~~', err);
+   }
+ };
+
+ reloadData = () => {
+   const currState = getNotePanes();
+   this.setState({ dataset: currState });
+   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', currState);
+ }
+
+ componentWillMount() {
+   this.reloadData();
+ }
+
+
+ changedPane = (index) => {
+       this.setState({ paneName: this.state.dataset[index].name });
+ }
+
+ realm.addListener('change', () => {
+   this.reloadData();
+
+// Supposidyl working write?
+   export const insertNewNotePane = async newNotePane => {
+     try {
+       const realm = await Realm.open(databaseOptions);
+       realm.write(async () => await realm.create(NOTEPANE_SCHEMA, newNotePane));
+     } catch (err) {
+       console.log('!!!!!!!!!!!!!!!!!!', err);
+       }
+     };
+
+     export const insertNewNotePane = newNotePane => new Promise((resolve, reject) => {
+         Realm.open(databaseOptions).then(realm => {
+             realm.write(() => {
+                 realm.create(NOTEPANE_SCHEMA, newNotePane);
+                 resolve(newNotePane);
+             });
+         }).catch((error) => reject(error));
+     });
+
+     const newNote = {
+       id: key,
+       note: this.state.text,
+       creationDate: Date(),
+       modifiedDate: Date(),
+       finished: false,
+     };
+     insertNewNote(newNote);
+
+     data={this.state.dataset}
+
+     export const getNotePanes = () => new Promise((resolve, reject) => {
+         Realm.open(databaseOptions).then(realm => {
+             const Panes = realm.objects(NOTEPANE_SCHEMA);
+             resolve(Panes);
+         }).catch((error) => {
+             reject(error);
+         });
+     });
+
+     componentWillMount() {
+       getNotePanes().then((data) => {
+         this.setState({
+           dataset: data
+         }, () => console.log('APPARENTLY DATA======', this.state.dataset[3].paneName));
+       });
+     }

@@ -12,7 +12,7 @@ import {
   Text,
   Content
 } from 'native-base';
-import realm, { updateNotePane, deleteNotePane, queryAllNotePanes } from '../database/allSchemas';
+import { insertNewNotePane, insertNewNote } from '../database/allSchemas';
 
 export default class NewNote extends Component {
   constructor(props) {
@@ -29,7 +29,18 @@ export default class NewNote extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('NotePanesScreen')}
+              onPress={() => {
+                const key = Math.floor(Date.now() / 1000);
+                const newPane = {
+                 id: key,
+                 paneName: this.state.text,
+                 notes: [{}],
+                };
+               console.log('NEW PANE =======', newPane);
+               insertNewNotePane(newPane);
+               this.props.navigation.navigate('NotePanesScreen');
+              }
+             }
             >
               <Icon style={styles.iconStyle} name='arrow-back' />
             </Button>

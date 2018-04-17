@@ -14,25 +14,30 @@ import {
   Icon,
   Button
 } from 'native-base';
+import { getNotePanes } from '../database/allSchemas';
 
 
 export default class NotePanes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: [
-        { id: 0, name: 'Urgent', notes: ['Hi', 'Ok Its Not Bad'] },
-        { id: 1, name: 'School', notes: [] },
-        { id: 2, name: 'Useless Things', notes: [] },
-        { id: 3, name: 'Even more Useless', notes: [] }
-      ],
-      paneName: 'Title',
+      dataset: [],
+      paneName: '',
     };
   }
 
+  componentWillMount() {
+    getNotePanes().then((data) => {
+      this.setState({
+        dataset: data
+      }, () => console.log('APPARENTLY DATA======', this.state.dataset[3].paneName));
+    });
+  }
+
   changedPane = (index) => {
-        this.setState({ paneName: this.state.dataset[index].name });
-      }
+        this.setState({ paneName: this.state.dataset[index].paneName });
+        console.log('PANENAME', this.state.dataset[index].paneName);
+  }
 
   renderItem({ item, index }) {
     return (
