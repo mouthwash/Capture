@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Alert } from 'react-native';
+import { Dimensions, Alert, FlatList } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Tabs from 'react-native-tabs';
 import {
@@ -59,6 +59,7 @@ export default class NotePanes extends Component {
                         <CardItem
                             bordered
                             key={index2}
+                            /*onPress{() => null }*/
                         >
                             <Body>
                                 <Text>{item2}</Text>
@@ -67,6 +68,11 @@ export default class NotePanes extends Component {
                     ))
                 }
                 </Content>
+
+                /*<FlatList
+                    data={this.dataset}
+
+                />*/
             </Card>
         );
     }
