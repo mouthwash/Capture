@@ -57,9 +57,10 @@ export default class NotePanes extends Component {
                 {
                     item.notes.map((item2, index2) => (
                         <CardItem
-                            bordered
+                            body
+                            button
                             key={index2}
-                            /*onPress{() => null }*/
+                            onPress={() => null }
                         >
                             <Body>
                                 <Text>{item2}</Text>
