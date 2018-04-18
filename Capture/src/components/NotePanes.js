@@ -21,9 +21,9 @@ export default class NotePanes extends Component {
         super(props);
         this.state = {
             dataset: [
-                { id: 0, name: 'Urgent', notes: ['Pick up daughter from school', 'Finish capstone assignment', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum.'] },
-                { id: 1, name: 'School', notes: ['Science project due in 3 weeks', 'Read textbook pages 20-30'] },
-                { id: 2, name: 'Reminders', notes: ['Apple is on the fridge', 'Email boss about the raise', 'Meeting Sasha for dinner at 7'] }
+              { id: 0, name: 'Urgent', notes: ['Pick up daughter from school', 'Finish capstone assignment', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum.'] },
+              { id: 1, name: 'School', notes: ['Science project due in 3 weeks', 'Read textbook pages 20-30'] },
+              { id: 2, name: 'Reminders', notes: ['Apple is on the fridge', 'Email boss about the raise', 'Meeting Sasha for dinner at 7'] }
             ]
         };
     }
@@ -33,8 +33,9 @@ export default class NotePanes extends Component {
             <Card style={styles.cardStyle}>
                 <Header style={styles.headerStyle}>
                     <Left style={styles.positionStyle}>
-                        <Button transparent
-                            onPress={() => this.props.navigation.navigate('NewPaneScreen')}
+                        <Button
+                          transparent
+                          onPress={() => this.props.navigation.navigate('NewPaneScreen')}
                         >
                             <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
                         </Button>
@@ -45,7 +46,8 @@ export default class NotePanes extends Component {
                         </Button>
                     </Body>
                     <Right style={styles.positionStyle}>
-                        <Button transparent
+                        <Button
+                          transparent
                           onPress={() => this.props.navigation.navigate('NewNoteScreen')}
                         >
                             <Icon type='Feather' name='plus' style={styles.iconStyle} />
@@ -61,12 +63,10 @@ export default class NotePanes extends Component {
                             body
                             button
                             key={index2}
-                            onPress={
-                                (item2) => {
-                                    item2 = this.item2;
-                                    this.props.navigation.navigate('NewNoteScreen', {currentNote: 'dog'});
-                                    console.log(item2);
-                                }
+                            onPress={() => {
+                              this.props.navigation.navigate('NewNoteScreen');
+                              console.log(item2);
+                              }
                             }
                         >
                             <Body>
@@ -83,12 +83,12 @@ export default class NotePanes extends Component {
     render() {
         return (
             <Container>
-                <Carousel
-                    data={this.state.dataset}
-                    renderItem={this.renderItem.bind(this)}
-                    itemWidth={Dimensions.get('window').width}
-                    sliderWidth={Dimensions.get('window').width}
-                />
+              <Carousel
+                data={this.state.dataset}
+                renderItem={this.renderItem.bind(this)}
+                itemWidth={Dimensions.get('window').width}
+                sliderWidth={Dimensions.get('window').width}
+              />
             </Container>
         );
     }

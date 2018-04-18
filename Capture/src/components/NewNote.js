@@ -28,25 +28,26 @@ export default class NewNote extends Component {
     }
 
     setDate(newDate) {
-        this.setState({date: newDate})
+        this.setState({ date: newDate })
     }
 
     render() {
-        const {goBack} = this.props.navigation;
+        const { goBack } = this.props.navigation;
 
-        var showDatePicker = this.state.showDatePicker ?
-            <DatePickerIOS
-                style={ styles.datePicker }
-                date={this.state.date} onDateChange={(date)=>this.setState({date})}
-                mode="date"
-            /> : <View />
+        // const showDatePicker = this.state.showDatePicker ?
+        //     (<DatePickerAndroid
+        //         style={styles.datePicker}
+        //         date={this.state.date} onDateChange={(date) => this.setState({ date })}
+        //         mode="date"
+        //     />) : <View />;
 
         return (
             <Container>
                 <Header style={styles.headerStyle}>
                     <Left>
-                        <Button transparent
-                            onPress={() => goBack()}
+                        <Button
+                          transparent
+                          onPress={() => goBack()}
                         >
                             <Icon style={styles.iconStyle} name='arrow-back' />
                         </Button>
@@ -55,10 +56,10 @@ export default class NewNote extends Component {
                         <Text style={styles.textStyle}>New Note</Text>
                     </Body>
                     <Right >
+                      {/*Inverts the showDatePicker flag to reveal or hide the date picker*/}
                         <Button
                             transparent
-                            /* Inverts the showDatePicker flag to reveal or hide the date picker */
-                            onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})}
+                            onPress={() => null}
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
                         </Button>
@@ -75,25 +76,24 @@ export default class NewNote extends Component {
                         value={this.state.currentNote}
                     />
                 </Content>
-                {showDatePicker} /* Date picker appears here but is initially hidden until clock is pressed */
+                   {/* {showDatePicker} Date picker appears here but is initially hidden until clock is pressed */}
                 <Footer style={styles.footerStyle}>
                     <FooterTab style={styles.footerStyle}>
                         <Button
-                            transparent
                             onPress={null}
                         >
                             <Icon type='Feather' name='trash-2' />
                         </Button>
 
-                        <Button transparent>
+                        <Button >
                             <Icon type='Feather' name='edit-2' />
                         </Button>
 
-                        <Button transparent>
+                        <Button >
                             <Icon type='Feather' name='image' />
                         </Button>
 
-                        <Button transparent>
+                        <Button >
                             <Icon type='Feather' name='check' />
                         </Button>
 

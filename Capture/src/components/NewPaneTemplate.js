@@ -19,13 +19,14 @@ export default class NewPane extends Component {
     }
 
     render() {
-        const {goBack} = this.props.navigation;
+        const { goBack } = this.props.navigation;
         return (
             <Container>
                 <Header style={styles.headerStyle}>
                     <Left>
-                        <Button transparent
-                            onPress={() => goBack()}
+                        <Button
+                          transparent
+                          onPress={() => goBack()}
                         >
                             <Icon style={styles.iconStyle} name='arrow-back' />
                         </Button>
@@ -45,16 +46,16 @@ export default class NewPane extends Component {
                       placeholder="Enter title for page here"
                     />
                     <View style={styles.buttonStyle}>
+                        {/* TODO - IMPLEMENT onPress TO CREATE NEW PANE */}
                         <Button
                             success
-                            /* TODO - IMPLEMENT onPress TO CREATE NEW PANE */
                         >
-                            <Text style={{color: 'white'}}> Submit </Text>
+                            <Text style={{ color: 'white' }}> Submit </Text>
                         </Button>
                     </View>
                 </View>
             </Container>
-        )
+        );
     }
 }
 
@@ -82,7 +83,7 @@ const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'flex-start',
-        paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0,
+        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
     buttonStyle: {
         position: 'absolute',
