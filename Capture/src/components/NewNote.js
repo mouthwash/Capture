@@ -20,7 +20,8 @@ export default class NewNote extends Component {
         super(props);
         this.state = {
             date: new Date(),
-            showDatePicker: false   /* Initially hides date picker */
+            showDatePicker: false,   /* Initially hides date picker */
+            currentNote: ''
         };
 
         this.setDate = this.setDate.bind(this);
@@ -56,6 +57,7 @@ export default class NewNote extends Component {
                     <Right >
                         <Button
                             transparent
+                            /* Inverts the showDatePicker flag to reveal or hide the date picker */
                             onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})}
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
@@ -70,7 +72,7 @@ export default class NewNote extends Component {
                         autoCorrect
                         underlineColorAndroid='transparent'
                         onChangeText={text => this.setState({ text })}
-                        value={this.state.text}
+                        value={this.state.currentNote}
                     />
                 </Content>
                 {showDatePicker} /* Date picker appears here but is initially hidden until clock is pressed */

@@ -57,10 +57,17 @@ export default class NotePanes extends Component {
                 {
                     item.notes.map((item2, index2) => (
                         <CardItem
+                            bordered
                             body
                             button
                             key={index2}
-                            onPress={() => null }
+                            onPress={
+                                (item2) => {
+                                    item2 = this.item2;
+                                    this.props.navigation.navigate('NewNoteScreen', {currentNote: 'dog'});
+                                    console.log(item2);
+                                }
+                            }
                         >
                             <Body>
                                 <Text>{item2}</Text>
