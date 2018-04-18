@@ -76,11 +76,6 @@ export default class NotePanes extends Component {
                     ))
                 }
                 </Content>
-
-                /*<FlatList
-                    data={this.dataset}
-
-                />*/
             </Card>
         );
     }
