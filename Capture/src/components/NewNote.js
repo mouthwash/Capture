@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput, View, Modal, TouchableHighlight } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import {
@@ -23,8 +23,13 @@ export default class NewNote extends Component {
         this.state = {
             date: "",
             time: "",
+            modalVisible: false,
             currentNote: ''
         };
+    }
+
+    toggleModal = (visible) => {
+        this.setState({ modalVisible: visible });
     }
 
     render() {
@@ -52,7 +57,7 @@ export default class NewNote extends Component {
                         <Button
                             transparent
                             onPress={() => {
-                                this.popupDialog.show();
+                                this.toggleModal(true)
                             }}
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
@@ -70,15 +75,16 @@ export default class NewNote extends Component {
                         onChangeText={text => this.setState({ text })}
                         value={this.state.currentNote}
                     />
-                    <View>
-                        <PopupDialog
-                            ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-                            dialogAnimation={slideAnimation}
-                            dialogTitle={<DialogTitle title="Set a reminder" />}
-                            haveOverlay={false}
+                    <View style={styles.container}>
+                        <Modal
+                            animationType = {"slide"}
+                            transparent = {false}
+                            onRequestClose = {() => { console.log("Modal has been closed.") } }>
+                            visible = {this.state.modalVisible}
                         >
                             <View style={styles.datePicker}>
-                                <DatePicker /* User chooses a date */
+                                {/* User chooses a date */}
+                                <DatePicker
                                     date={this.state.date}
                                     mode="date"
                                     placeholder="Select date"
@@ -100,13 +106,10 @@ export default class NewNote extends Component {
                                     }}
                                     onDateChange={(date) => {
                                         this.setState({date: date});
-                                        this.popupDialog.dismiss();
-                                    }}
-                                    onCloseModal = {() => {
-                                        this.popupDialog.show();
                                     }}
                                 />
-                                <DatePicker /* User chooses a time */
+                                {/* User chooses a time */}
+                                <DatePicker
                                     date={this.state.date}
                                     mode="time"
                                     placeholder="Select time"
@@ -125,11 +128,13 @@ export default class NewNote extends Component {
                                     }}
                                     onDateChange={(date) => {
                                         this.setState({time: date});
-                                        this.popupDialog.dismiss();
                                     }}
                                 />
+                            <TouchableHighlight onPress = {() => {this.toggleModal(false)}}>
+                                    <Text>Close</Text>
+                                </TouchableHighlight>
                             </View>
-                        </PopupDialog>
+                        </Modal>
                     </View>
                 </Content>
 
@@ -172,6 +177,16 @@ export default class NewNote extends Component {
 }
 
 const styles = {
+    container: {
+        alignItems: 'center',
+        backgroundColor: '#ede3f2',
+        padding: 100
+    },
+    modal: {
+        flex: 1,
+        alignItems: 'center',
+        padding: 100
+    },
     headerStyle: {
         backgroundColor: '#06317c',
         elevation: 0,
