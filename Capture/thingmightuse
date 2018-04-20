@@ -1,1 +1,0 @@
-onPress={() => this.setState({ showDatePicker: !this.state.showDatePicker })}
