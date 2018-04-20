@@ -9,6 +9,7 @@ import {
     Button,
     Icon
 } from 'native-base';
+import { insertNewNotePane } from '../database/allSchemas';
 
 export default class NewPane extends Component {
     constructor(props) {
@@ -43,12 +44,29 @@ export default class NewPane extends Component {
                 <View style={styles.containerStyle}>
                     <TextInput
                       style={styles.inputStyle}
-                      placeholder="Enter title for page here"
+                      multiline
+                      autoFocus
+                      autoCorrect
+                      underlineColorAndroid='transparent'
+                      onChangeText={text => this.setState({ text })}
+                      value={this.state.text}
                     />
                     <View style={styles.buttonStyle}>
-                        {/* TODO - IMPLEMENT onPress TO CREATE NEW PANE */}
                         <Button
                             success
+                            onPress={() => {
+                              const key = Math.floor(Date.now() / 1000);
+                              const newPane = {
+                                id: key,
+                                paneName: this.state.text,
+                                notes: [{}],
+                              };
+                              console.log('NEW PANE =======', newPane);
+                              insertNewNotePane(newPane);
+                              goBack();
+
+                          }
+                        }
                         >
                             <Text style={{ color: 'white' }}> Submit </Text>
                         </Button>
@@ -70,7 +88,7 @@ const styles = {
     },
     inputStyle: {
         textAlignVertical: 'top',
-        fontSize: 12,
+        fontSize: 20,
         paddingLeft: 15,
         paddingRight: 15,
     },
