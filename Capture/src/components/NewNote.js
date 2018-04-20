@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { TextInput, DatePickerIOS, DatePickerAndroid, View } from 'react-native';
+import { TextInput, View } from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import {
   Container,
   Header,
@@ -19,30 +21,22 @@ export default class NewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: new Date(),
-            showDatePicker: false,   /* Initially hides date picker */
+            date: "",
+            time: "",
             currentNote: ''
         };
-
-        this.setDate = this.setDate.bind(this);
-    }
-
-    setDate(newDate) {
-        this.setState({date: newDate})
     }
 
     render() {
         const {goBack} = this.props.navigation;
 
-        var showDatePicker = this.state.showDatePicker ?
-            <DatePickerIOS
-                style={ styles.datePicker }
-                date={this.state.date} onDateChange={(date)=>this.setState({date})}
-                mode="date"
-            /> : <View />
+        const slideAnimation = new SlideAnimation ({
+            slideFrom: 'bottom',
+        });
 
         return (
             <Container>
+
                 <Header style={styles.headerStyle}>
                     <Left>
                         <Button transparent
@@ -54,16 +48,18 @@ export default class NewNote extends Component {
                     <Body>
                         <Text style={styles.textStyle}>New Note</Text>
                     </Body>
-                    <Right >
+                    <Right>
                         <Button
                             transparent
-                            /* Inverts the showDatePicker flag to reveal or hide the date picker */
-                            onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})}
+                            onPress={() => {
+                                this.popupDialog.show();
+                            }}
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
                         </Button>
                     </Right>
                 </Header>
+
                 <Content>
                     <TextInput
                         style={styles.inputStyle}
@@ -74,8 +70,69 @@ export default class NewNote extends Component {
                         onChangeText={text => this.setState({ text })}
                         value={this.state.currentNote}
                     />
+                    <View>
+                        <PopupDialog
+                            ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+                            dialogAnimation={slideAnimation}
+                            dialogTitle={<DialogTitle title="Set a reminder" />}
+                            haveOverlay={false}
+                        >
+                            <View style={styles.datePicker}>
+                                <DatePicker /* User chooses a date */
+                                    date={this.state.date}
+                                    mode="date"
+                                    placeholder="Select date"
+                                    format="MM-DD-YYYY"
+                                    minDate="01-01-2018"
+                                    maxDate="12-31-2025"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+                                    }}
+                                    onDateChange={(date) => {
+                                        this.setState({date: date});
+                                        this.popupDialog.dismiss();
+                                    }}
+                                    onCloseModal = {() => {
+                                        this.popupDialog.show();
+                                    }}
+                                />
+                                <DatePicker /* User chooses a time */
+                                    date={this.state.date}
+                                    mode="time"
+                                    placeholder="Select time"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+                                    }}
+                                    onDateChange={(date) => {
+                                        this.setState({time: date});
+                                        this.popupDialog.dismiss();
+                                    }}
+                                />
+                            </View>
+                        </PopupDialog>
+                    </View>
                 </Content>
-                {showDatePicker} /* Date picker appears here but is initially hidden until clock is pressed */
+
                 <Footer style={styles.footerStyle}>
                     <FooterTab style={styles.footerStyle}>
                         <Button
@@ -85,20 +142,30 @@ export default class NewNote extends Component {
                             <Icon type='Feather' name='trash-2' />
                         </Button>
 
-                        <Button transparent>
+                        <Button
+                            transparent
+                            onPress={null}
+                        >
                             <Icon type='Feather' name='edit-2' />
                         </Button>
 
-                        <Button transparent>
+                        <Button
+                            transparent
+                            onPress={null}
+                        >
                             <Icon type='Feather' name='image' />
                         </Button>
 
-                        <Button transparent>
+                        <Button
+                            transparent
+                            onPress={null}
+                        >
                             <Icon type='Feather' name='check' />
                         </Button>
 
                     </FooterTab >
                 </Footer>
+
             </Container>
         );
     }
@@ -127,6 +194,7 @@ const styles = {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        height: 150,
+        alignItems: 'center',
+        width: 350,
     }
 };

@@ -70,7 +70,12 @@ export default class NotePanes extends Component {
                             }
                         >
                             <Body>
-                                <Text>{item2}</Text>
+                                if (item2.length > 20){
+
+                                } else {
+                                    <Text numberOfLines={1}>{item2}</Text>
+                                }
+
                             </Body>
                         </CardItem>
                     ))
