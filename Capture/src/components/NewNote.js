@@ -25,6 +25,7 @@ export default class NewNote extends Component {
             time: "",
             currentNote: ''
         };
+    }    
 
     render() {
         const {goBack} = this.props.navigation;
@@ -76,8 +77,9 @@ export default class NewNote extends Component {
                             dialogTitle={<DialogTitle title="Set a reminder" />}
                             haveOverlay={false}
                         >
+                            {/* User chooses a date */}
                             <View style={styles.datePicker}>
-                                <DatePicker /* User chooses a date */
+                                <DatePicker
                                     date={this.state.date}
                                     mode="date"
                                     placeholder="Select date"
@@ -105,7 +107,8 @@ export default class NewNote extends Component {
                                         this.popupDialog.show();
                                     }}
                                 />
-                                <DatePicker /* User chooses a time */
+                                {/* User chooses a time */}
+                                <DatePicker
                                     date={this.state.date}
                                     mode="time"
                                     placeholder="Select time"

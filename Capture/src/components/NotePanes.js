@@ -30,15 +30,15 @@ export default class NotePanes extends Component {
 
   componentWillMount() {
     getNotePanes().then((data) => {
-    this.setState({
-      dataset: data
-    }, () => console.log('APPARENTLY DATA======', this.state.dataset[1].paneName));
-  });
-}
+      this.setState({
+        dataset: data
+      }, () => null);
+    });
+  }
 
   reloadData() {
     getNotePanes().then((data) => {
-    this.setState({ dataset: data });
+      this.setState({ dataset: data });
     });
   }
     renderItem({ item, index }) {
