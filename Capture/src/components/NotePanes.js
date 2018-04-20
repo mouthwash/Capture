@@ -15,19 +15,32 @@ import {
     Icon,
     Button
 } from 'native-base';
+import realm, { getNotePanes } from '../database/allSchemas';
 
 export default class NotePanes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataset: [
-              { id: 0, name: 'Urgent', notes: ['Pick up daughter from school', 'Finish capstone assignment', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum.'] },
-              { id: 1, name: 'School', notes: ['Science project due in 3 weeks', 'Read textbook pages 20-30'] },
-              { id: 2, name: 'Reminders', notes: ['Apple is on the fridge', 'Email boss about the raise', 'Meeting Sasha for dinner at 7'] }
-            ]
+            dataset: []
         };
+        realm.addListener('change', () => {
+          this.reloadData();
+        });
     }
 
+  componentWillMount() {
+    getNotePanes().then((data) => {
+    this.setState({
+      dataset: data
+    }, () => console.log('APPARENTLY DATA======', this.state.dataset[1].paneName));
+  });
+}
+
+  reloadData() {
+    getNotePanes().then((data) => {
+    this.setState({ dataset: data });
+    });
+  }
     renderItem({ item, index }) {
         return (
             <Card style={styles.cardStyle}>
@@ -42,7 +55,7 @@ export default class NotePanes extends Component {
                     </Left>
                     <Body style={styles.positionStyle}>
                         <Button transparent>
-                            <Text style={styles.textStyle}>{item.name}</Text>
+                            <Text style={styles.textStyle}>{item.paneName}</Text>
                         </Button>
                     </Body>
                     <Right style={styles.positionStyle}>
@@ -65,7 +78,6 @@ export default class NotePanes extends Component {
                             key={index2}
                             onPress={() => {
                               this.props.navigation.navigate('NewNoteScreen');
-                              console.log(item2);
                               }
                             }
                         >

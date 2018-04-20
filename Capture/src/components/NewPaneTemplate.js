@@ -64,7 +64,6 @@ export default class NewPane extends Component {
                               console.log('NEW PANE =======', newPane);
                               insertNewNotePane(newPane);
                               goBack();
-
                           }
                         }
                         >
