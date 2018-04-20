@@ -1,4 +1,5 @@
 import Realm from 'realm';
+
 export const NOTEPANE_SCHEMA = 'NotePane'; //schema name
 export const NOTE_SCHEMA = 'Note'; //schema name
 
@@ -19,62 +20,45 @@ export const NotePaneSchema = {
   name: NOTEPANE_SCHEMA,
   primaryKey: 'id',
   properties: {
-    id: 'int', // primaryKey
+    id: 'int', // primaryKeney
     paneName: 'string',
     notes: { type: 'list', objectType: NOTE_SCHEMA },
   }
 };
-const databaseOptions = {
+export const databaseOptions = {
   path: 'Capture.realm',
   schema: [NoteSchema, NotePaneSchema],
   schemaVersion: 0,
 };
 
 //functions for NotePane
-export const insertNewNotePane = newNotePane => new Promise((resolve, reject) => {
-  Realm.open(databaseOptions).then(realm => {
-    realm.write(() => {
-      realm.create(NOTEPANE_SCHEMA, newNotePane);
-      resolve(newNotePane); //if successful resolve called
-    });
-  }).catch((error) => reject(error)); // if not successful reject called
-});
+export const insertNewNotePane = async newNotePane => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    realm.write(async () => await realm.create(NOTEPANE_SCHEMA, newNotePane));
+  } catch (err) {
+    console.log('!!!!!!!!!!!!!!!!!!', err);
+    }
+  };
 
-export const updateNotePane = notePane => new Promise((resolve, reject) => {
-  Realm.open(databaseOptions).then(realm => {
-    realm.write(() => {
-      let updatingNotePane = realm.objectForPrimaryKey(NOTEPANE_SCHEMA, notePane.id);
-      updatingNotePane.paneName = notePane.paneName;
-      resolve();
-    });
-  }).catch((error) => reject(error));
-});
+export const getNotePanes = async () => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    const Panes = realm.objects(NOTEPANE_SCHEMA);
+    return Array.from(Panes);
+    } catch (err) {
+        console.log('GET ERROR');
+    }
+};
 
-export const deleteNotePane = notePaneId => new Promise((resolve, reject) => {
-  Realm.open(databaseOptions).then(realm => {
-    realm.write(() => {
-      let deletingNotePane = realm.objectForPrimaryKey(NOTEPANE_SCHEMA, notePaneId);
-      realm.delete(deletingNotePane);
-      resolve();
-    });
-  }).catch((error) => reject(error));
-});
+export const insertNewNote = async newNote => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    realm.write(async () => await realm.create(NOTE_SCHEMA, newNote));
+  } catch (err) {
+    console.log('############', err);
+  }
+};
 
-export const deleteAllPanes = () => new Promise((resolve, reject) => {
-  Realm.open(databaseOptions).then(realm => {
-    realm.write(() => {
-      let allNotePanes = realm.objects(NOTEPANE_SCHEMA); //query all NOTEPANE_SCHEMA
-      realm.delete(deleteAllPanes);
-      resolve();
-    });
-  }).catch((error) => reject(error));
-});
-
-export const queryAllNotePanes = () => new Promise((resolve, reject) => {
-  Realm.open(databaseOptions).then(realm => {
-    let allNotePanes = realm.objects(NOTEPANE_SCHEMA);
-    resolve(allNotePanes);
-  }).catch((error) => reject(error));
-});
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export default new Realm(databaseOptions);

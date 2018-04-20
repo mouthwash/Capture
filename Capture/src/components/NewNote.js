@@ -25,7 +25,6 @@ export default class NewNote extends Component {
             time: "",
             currentNote: ''
         };
-    }
 
     render() {
         const {goBack} = this.props.navigation;
@@ -39,8 +38,9 @@ export default class NewNote extends Component {
 
                 <Header style={styles.headerStyle}>
                     <Left>
-                        <Button transparent
-                            onPress={() => goBack()}
+                        <Button
+                          transparent
+                          onPress={() => goBack()}
                         >
                             <Icon style={styles.iconStyle} name='arrow-back' />
                         </Button>
@@ -51,9 +51,8 @@ export default class NewNote extends Component {
                     <Right>
                         <Button
                             transparent
-                            onPress={() => {
-                                this.popupDialog.show();
-                            }}
+                            onPress={() => null}
+
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
                         </Button>
@@ -135,34 +134,18 @@ export default class NewNote extends Component {
 
                 <Footer style={styles.footerStyle}>
                     <FooterTab style={styles.footerStyle}>
-                        <Button
-                            transparent
-                            onPress={null}
-                        >
+                        <Button onPress={null} >
                             <Icon type='Feather' name='trash-2' />
                         </Button>
-
-                        <Button
-                            transparent
-                            onPress={null}
-                        >
+                        <Button >
                             <Icon type='Feather' name='edit-2' />
                         </Button>
-
-                        <Button
-                            transparent
-                            onPress={null}
-                        >
+                        <Button >
                             <Icon type='Feather' name='image' />
                         </Button>
-
-                        <Button
-                            transparent
-                            onPress={null}
-                        >
+                        <Button >
                             <Icon type='Feather' name='check' />
                         </Button>
-
                     </FooterTab >
                 </Footer>
 

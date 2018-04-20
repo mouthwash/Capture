@@ -9,6 +9,7 @@ import {
     Button,
     Icon
 } from 'native-base';
+import { insertNewNotePane } from '../database/allSchemas';
 
 export default class NewPane extends Component {
     constructor(props) {
@@ -19,13 +20,14 @@ export default class NewPane extends Component {
     }
 
     render() {
-        const {goBack} = this.props.navigation;
+        const { goBack } = this.props.navigation;
         return (
             <Container>
                 <Header style={styles.headerStyle}>
                     <Left>
-                        <Button transparent
-                            onPress={() => goBack()}
+                        <Button
+                          transparent
+                          onPress={() => goBack()}
                         >
                             <Icon style={styles.iconStyle} name='arrow-back' />
                         </Button>
@@ -41,20 +43,37 @@ export default class NewPane extends Component {
                 </Header>
                 <View style={styles.containerStyle}>
                     <TextInput
+                      placeholder='Enter Title Here'
                       style={styles.inputStyle}
-                      placeholder="Enter title for page here"
+                      multiline
+                      autoFocus
+                      autoCorrect
+                      underlineColorAndroid='transparent'
+                      onChangeText={text => this.setState({ text })}
+                      value={this.state.text}
                     />
                     <View style={styles.buttonStyle}>
                         <Button
                             success
-                            /* TODO - IMPLEMENT onPress TO CREATE NEW PANE */
+                            onPress={() => {
+                              const key = Math.floor(Date.now() / 1000);
+                              const newPane = {
+                                id: key,
+                                paneName: this.state.text,
+                                notes: [{}],
+                              };
+                              console.log('NEW PANE =======', newPane);
+                              insertNewNotePane(newPane);
+                              goBack();
+                          }
+                        }
                         >
-                            <Text style={{color: 'white'}}> Submit </Text>
+                            <Text style={{ color: 'white' }}> Submit </Text>
                         </Button>
                     </View>
                 </View>
             </Container>
-        )
+        );
     }
 }
 
@@ -69,9 +88,10 @@ const styles = {
     },
     inputStyle: {
         textAlignVertical: 'top',
-        fontSize: 12,
+        fontSize: 20,
         paddingLeft: 15,
         paddingRight: 15,
+        width: '100%'
     },
     iconStyle: {
         color: 'white'
@@ -82,7 +102,7 @@ const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'flex-start',
-        paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0,
+        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
     buttonStyle: {
         position: 'absolute',
