@@ -34,13 +34,6 @@ export default class NewNote extends Component {
     render() {
         const { goBack } = this.props.navigation;
 
-        // const showDatePicker = this.state.showDatePicker ?
-        //     (<DatePickerAndroid
-        //         style={styles.datePicker}
-        //         date={this.state.date} onDateChange={(date) => this.setState({ date })}
-        //         mode="date"
-        //     />) : <View />;
-
         return (
             <Container>
                 <Header style={styles.headerStyle}>
@@ -56,7 +49,6 @@ export default class NewNote extends Component {
                         <Text style={styles.textStyle}>New Note</Text>
                     </Body>
                     <Right >
-                      {/*Inverts the showDatePicker flag to reveal or hide the date picker*/}
                         <Button
                             transparent
                             onPress={() => null}
@@ -76,7 +68,6 @@ export default class NewNote extends Component {
                         value={this.state.currentNote}
                     />
                 </Content>
-                   {/* {showDatePicker} Date picker appears here but is initially hidden until clock is pressed */}
                 <Footer style={styles.footerStyle}>
                     <FooterTab style={styles.footerStyle}>
                         <Button
