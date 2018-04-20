@@ -43,6 +43,7 @@ export default class NewPane extends Component {
                 </Header>
                 <View style={styles.containerStyle}>
                     <TextInput
+                      placeholder='Enter Title Here'
                       style={styles.inputStyle}
                       multiline
                       autoFocus
@@ -90,6 +91,7 @@ const styles = {
         fontSize: 20,
         paddingLeft: 15,
         paddingRight: 15,
+        width: '100%'
     },
     iconStyle: {
         color: 'white'
