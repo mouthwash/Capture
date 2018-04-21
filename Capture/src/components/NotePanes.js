@@ -15,13 +15,14 @@ import {
     Icon,
     Button
 } from 'native-base';
-import realm, { getNotePanes } from '../database/allSchemas';
+import realm, { getNotePanes, insertNewNotePane } from '../database/allSchemas';
 
 export default class NotePanes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataset: []
+            dataset: [],
+            currentPaneID: 0,
         };
         realm.addListener('change', () => {
           this.reloadData();
@@ -31,9 +32,31 @@ export default class NotePanes extends Component {
   componentWillMount() {
     getNotePanes().then((data) => {
       this.setState({
-        dataset: data
-      }, () => null);
+        dataset: data,
+      });
+    }).then(() => {
+    if (this.state.dataset.length === 0) {
+      console.log('DATA LENGTH ============', this.state.dataset.length);
+      const key = Math.floor(Date.now() / 1000);
+      const newPane = {
+        id: key,
+        paneName: 'Urgent',
+        notes: [{}],
+      };
+      console.log('NEW PANE =======', newPane);
+      insertNewNotePane(newPane);
+      this.setState({ currentPaneID: key });
+      console.log('PANE ID=======', key);
+    } else {
+      this.setState({ currentPaneID: this.state.dataset[0].id });
+      console.log('PANE ID=======', this.state.dataset[0].id);
+    }
     });
+  }
+
+  changedPane = (index) => {
+      this.setState({ currentPaneID: this.state.dataset[index].id });
+      console.log('PANE ID=======', this.state.dataset[index].id);
   }
 
   reloadData() {
@@ -61,7 +84,10 @@ export default class NotePanes extends Component {
                     <Right style={styles.positionStyle}>
                         <Button
                           transparent
-                          onPress={() => this.props.navigation.navigate('NewNoteScreen')}
+                          onPress={() => {
+                            this.props.navigation.navigate('NewNoteScreen',
+                            { paneID: this.state.currentPaneID });
+                          }}
                         >
                             <Icon type='Feather' name='plus' style={styles.iconStyle} />
                         </Button>
@@ -70,23 +96,19 @@ export default class NotePanes extends Component {
 
                 <Content>
                 {
-                    item.notes.map((item2, index2) => (
+                    item.notes.map((noteItem, indexOfNote) => (
                         <CardItem
                             bordered
                             body
                             button
-                            key={index2}
+                            key={indexOfNote}
                             onPress={() => {
                               this.props.navigation.navigate('NewNoteScreen');
                               }
                             }
                         >
                             <Body>
-                                if (item2.length > 20){
-
-                                } else {
-                                    <Text numberOfLines={1}>{item2}</Text>
-                                }
+                                    <Text >{noteItem.note}</Text>
 
                             </Body>
                         </CardItem>
@@ -105,6 +127,7 @@ export default class NotePanes extends Component {
                 renderItem={this.renderItem.bind(this)}
                 itemWidth={Dimensions.get('window').width}
                 sliderWidth={Dimensions.get('window').width}
+                onSnapToItem={this.changedPane}
               />
             </Container>
         );
