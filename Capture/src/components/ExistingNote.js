@@ -17,6 +17,9 @@ import {
 } from 'native-base';
 import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
 
+//import styles
+import styles from '../styles/stylesheet';
+
 export default class ExistingNote extends Component {
   constructor(props) {
     super(props);
@@ -37,15 +40,52 @@ export default class ExistingNote extends Component {
 
     return (
       <Container>
-        <Header>
-          <Text>Existing Header</Text>
+
+        <Header style={styles.headerStyle}>
+          <Left>
+            <Button
+              transparent
+              onPress={() => goBack()}
+            >
+              <Icon style={styles.iconStyle} name='arrow-back' />
+            </Button>
+          </Left>
+          <Body style={styles.positionStyle}>
+            <Text style={styles.textStyle}>
+              Existing Header
+            </Text>
+          </Body>
+          <Right>
+            <Button
+              transparent
+              onPress={() => null}
+              >
+              <Icon type='Feather' name='edit' style={styles.iconStyle} />
+            </Button>
+          </Right>
         </Header>
+
         <Content>
           <Text> {this.state.note} </Text>
         </Content>
-        <Footer>
-          <FooterTab></FooterTab>
+
+        <Footer style={styles.footerStyle}>
+          <FooterTab style={styles.footerStyle}>
+            <Button onPress={null} >
+              <Icon type='Feather' name='trash-2' />
+            </Button>
+            <Button >
+              <Icon type='Feather' name='edit-2' />
+            </Button>
+            <Button >
+              <Icon type='Feather' name='image' />
+            </Button>
+            <Button>
+              <Icon type='Feather' name='check' />
+            </Button>
+          </FooterTab>
         </Footer>
+
       </Container>
     );
   }
