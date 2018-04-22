@@ -24,6 +24,7 @@ export default class ExistingNote extends Component {
       date: '',
       time: '',
       paneID: this.props.navigation.state.params.paneID,
+      note: this.props.navigation.state.params.note,
     };
   }
 
@@ -36,8 +37,12 @@ export default class ExistingNote extends Component {
 
     return (
       <Container>
-        <Header></Header>
-        <Content></Content>
+        <Header>
+          <Text>Existing Header</Text>
+        </Header>
+        <Content>
+          <Text> {this.state.note} </Text>
+        </Content>
         <Footer>
           <FooterTab></FooterTab>
         </Footer>
