@@ -64,5 +64,15 @@ export const insertNewNote = async (newNote, paneID) => {
   }
 };
 
+export const deleteNotePane = async (paneID) => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    const PaneToDelete = await realm.objectForPrimaryKey(NOTEPANE_SCHEMA, paneID);
+    realm.write(async () => await realm.delete(PaneToDelete));
+  } catch (err) {
+    console.log('deleteNotePane Error', err);
+  }
+};
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export default new Realm(databaseOptions);
