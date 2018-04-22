@@ -187,7 +187,10 @@ export default class NotePanes extends Component {
                 ref={(newPane) => { this.newPane = newPane; }}
                 dialogAnimation={scaleAnimation}
                 dialogTitle={<DialogTitle title='New Pane' />}
-                onDismissed={() => { Keyboard.dismiss(); }}
+                onDismissed={() => {
+                  Keyboard.dismiss();
+                  this.setState({ newNoteTitle: '' });
+                }}
               >
               <Item rounded>
                 <Input
