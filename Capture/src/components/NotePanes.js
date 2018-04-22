@@ -122,9 +122,9 @@ export default class NotePanes extends Component {
                         button
                         key={indexOfNote}
                         onPress={() => {
-                          this.props.navigation.navigate('NewNoteScreen');
-                          }
-                        }
+                          this.props.navigation.navigate('ExistingNoteScreen',
+                          { paneID: this.state.currentPaneID });
+                        }}
                       >
                         <Body>
                           <Text >{noteItem.note}</Text>
