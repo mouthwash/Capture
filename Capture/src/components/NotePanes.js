@@ -20,6 +20,9 @@ import {
 } from 'native-base';
 import realm, { getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
+//import styles
+import styles from '../styles/stylesheet';
+
 const scaleAnimation = new ScaleAnimation();
 
 export default class NotePanes extends Component {
@@ -122,9 +125,13 @@ export default class NotePanes extends Component {
                         button
                         key={indexOfNote}
                         onPress={() => {
-                          this.props.navigation.navigate('NewNoteScreen');
+                          this.props.navigation.navigate('ExistingNoteScreen',
+                          {
+                            paneID: this.state.currentPaneID,
+                            note: noteItem.note,
                           }
-                        }
+                          );
+                        }}
                       >
                         <Body>
                           <Text >{noteItem.note}</Text>
@@ -221,34 +228,3 @@ export default class NotePanes extends Component {
         );
     }
 }
-
-const styles = {
-    textStyle: {
-        fontSize: 20,
-        color: 'white',
-    },
-    cardStyle: {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: 0,
-        marginBottom: 0,
-        backgroundColor: '#e6e9ef'
-    },
-    headerStyle: {
-        backgroundColor: '#06317c'
-    },
-    positionStyle: {
-        flex: 1,
-    },
-    iconStyle: {
-        color: 'white'
-    },
-    newPaneStyle: {
-      padding: 10,
-    },
-    inputStyle: {
-      padding: 10,
-    },
-};

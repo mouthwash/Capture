@@ -17,6 +17,9 @@ import {
 } from 'native-base';
 import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
 
+//import styles
+import styles from '../styles/stylesheet';
+
 export default class NewNote extends Component {
     constructor(props) {
         super(props);
@@ -47,7 +50,9 @@ export default class NewNote extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Text style={styles.textStyle}>New Note</Text>
+                        <Text style={styles.textStyle}>
+                          New Note
+                        </Text>
                     </Body>
                     <Right>
                         <Button
@@ -170,31 +175,3 @@ export default class NewNote extends Component {
         );
     }
 }
-
-const styles = {
-    headerStyle: {
-        backgroundColor: '#06317c',
-        elevation: 0,
-    },
-    inputStyle: {
-        textAlignVertical: 'top',
-        fontSize: 20,
-        paddingLeft: 20,
-        paddingRight: 15,
-        paddingTop: 20,
-    },
-    iconStyle: {
-        color: 'white'
-    },
-    textStyle: {
-        fontSize: 20,
-        color: 'white',
-    },
-    datePicker: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 350,
-    }
-};
