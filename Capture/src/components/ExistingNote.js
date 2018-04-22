@@ -17,7 +17,7 @@ import {
 } from 'native-base';
 import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
 
-export default class ExstingNote extends Component {
+export default class ExistingNote extends Component {
   constructor(props) {
     super(props);
     this.state = {
