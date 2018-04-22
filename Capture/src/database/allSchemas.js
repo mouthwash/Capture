@@ -20,7 +20,7 @@ export const NotePaneSchema = {
   name: NOTEPANE_SCHEMA,
   primaryKey: 'id',
   properties: {
-    id: 'int', // primaryKeney
+    id: 'int', // primaryKey
     paneName: 'string',
     notes: { type: 'list', objectType: NOTE_SCHEMA },
   }
@@ -51,12 +51,26 @@ export const getNotePanes = async () => {
     }
 };
 
-export const insertNewNote = async newNote => {
+export const insertNewNote = async (newNote, paneID) => {
   try {
     const realm = await Realm.open(databaseOptions);
-    realm.write(async () => await realm.create(NOTE_SCHEMA, newNote));
+    //realm.write(async () => await realm.create(NOTE_SCHEMA, newNote));
+    //const PaneToWriteTo = await realm.objects(NOTEPANE_SCHEMA).filtered('id == $0', paneID);
+    const PaneToWriteTo = await realm.objectForPrimaryKey(NOTEPANE_SCHEMA, paneID);
+    console.log('THE TRUE PANE WE ARE ADDING TO============', PaneToWriteTo.paneName);
+    realm.write(async () => await PaneToWriteTo.notes.push(newNote));
   } catch (err) {
     console.log('############', err);
+  }
+};
+
+export const deleteNotePane = async (paneID) => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    const PaneToDelete = await realm.objectForPrimaryKey(NOTEPANE_SCHEMA, paneID);
+    realm.write(async () => await realm.delete(PaneToDelete));
+  } catch (err) {
+    console.log('deleteNotePane Error', err);
   }
 };
 

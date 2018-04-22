@@ -15,21 +15,21 @@ import {
   Text,
   Content
 } from 'native-base';
-import realm, { updateNotePane, deleteNotePane, queryAllNotePanes } from '../database/allSchemas';
+import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
 
 export default class NewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: "",
-            time: "",
-            currentNote: ''
+            date: '',
+            time: '',
+            paneID: this.props.navigation.state.params.paneID,
         };
-    }    
+    }
 
     render() {
-        const {goBack} = this.props.navigation;
-
+        const { goBack } = this.props.navigation;
+        console.log('PANE ID OF NEW NOTE=========', this.state.paneID);
         const slideAnimation = new SlideAnimation ({
             slideFrom: 'bottom',
         });
@@ -53,7 +53,6 @@ export default class NewNote extends Component {
                         <Button
                             transparent
                             onPress={() => null}
-
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
                         </Button>
@@ -68,7 +67,7 @@ export default class NewNote extends Component {
                         autoCorrect
                         underlineColorAndroid='transparent'
                         onChangeText={text => this.setState({ text })}
-                        value={this.state.currentNote}
+                        value={this.state.text}
                     />
                     <View>
                         <PopupDialog
@@ -100,10 +99,10 @@ export default class NewNote extends Component {
                                         }
                                     }}
                                     onDateChange={(date) => {
-                                        this.setState({date: date});
+                                        this.setState({ date: date });
                                         this.popupDialog.dismiss();
                                     }}
-                                    onCloseModal = {() => {
+                                    onCloseModal={() => {
                                         this.popupDialog.show();
                                     }}
                                 />
@@ -138,16 +137,31 @@ export default class NewNote extends Component {
                 <Footer style={styles.footerStyle}>
                     <FooterTab style={styles.footerStyle}>
                         <Button onPress={null} >
-                            <Icon type='Feather' name='trash-2' />
+                          <Icon type='Feather' name='trash-2' />
                         </Button>
                         <Button >
-                            <Icon type='Feather' name='edit-2' />
+                          <Icon type='Feather' name='edit-2' />
                         </Button>
                         <Button >
-                            <Icon type='Feather' name='image' />
+                          <Icon type='Feather' name='image' />
                         </Button>
-                        <Button >
-                            <Icon type='Feather' name='check' />
+                        <Button
+                          onPress={() => {
+                              const key = Math.floor(Date.now() / 1000);
+                              const newNote = {
+                                id: key,
+                                note: this.state.text,
+                                creationDate: Date(),
+                                modifiedDate: Date(),
+                                finished: false,
+                              };
+                              console.log('NEW NOTE =======', newNote);
+                              insertNewNote(newNote, this.state.paneID);
+                              goBack();
+                            }
+                          }
+                        >
+                          <Icon type='Feather' name='check' />
                         </Button>
                     </FooterTab >
                 </Footer>
