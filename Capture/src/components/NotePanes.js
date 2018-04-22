@@ -21,7 +21,7 @@ import {
 import realm, { getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import styles from '../styles/stylesheet';
+import {styles} from '../styles/stylesheet';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -120,6 +120,7 @@ export default class NotePanes extends Component {
                 {
                     item.notes.map((noteItem, indexOfNote) => (
                       <CardItem
+                        style={styles.cardItemStyle}
                         bordered
                         body
                         button

@@ -1,8 +1,14 @@
-//notePane
+const colorway = {
+  one: '#0277BD',
+  two: '#CFD8DC',
+  three: '',
+  background: '#90A4AE',
+}
+
 const styles = {
 
   headerStyle: {
-    backgroundColor: '#06317c'
+    backgroundColor: colorway.one,
   },
 
   cardStyle: {
@@ -10,7 +16,12 @@ const styles = {
     marginRight: 0,
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: '#e6e9ef',
+    backgroundColor: colorway.background,
+  },
+
+  cardItemStyle: {
+    backgroundColor: colorway.two,
+    margin: 5,
   },
 
   textStyle: {
@@ -72,4 +83,7 @@ const styles = {
 };
 
 
-export default styles;
+export {
+  styles,
+  colorway,
+};
