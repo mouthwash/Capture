@@ -12,7 +12,7 @@ import {
 import { insertNewNotePane } from '../database/allSchemas';
 
 //import styles
-import styles from '../styles/stylesheet';
+import {styles} from '../styles/stylesheet';
 
 export default class NewPane extends Component {
     constructor(props) {
