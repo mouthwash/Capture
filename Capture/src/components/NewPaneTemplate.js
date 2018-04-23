@@ -45,9 +45,9 @@ export default class NewPane extends Component {
             placeholder="Enter title for page here"
             />
           <View style={styles.buttonStyle}>
+            {/* TODO - IMPLEMENT onPress TO CREATE NEW PANE */}
             <Button
               success
-              {/* TODO - IMPLEMENT onPress TO CREATE NEW PANE */}
               >
               <Text style={{color: 'white'}}> Submit </Text>
             </Button>
