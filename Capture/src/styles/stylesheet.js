@@ -19,8 +19,12 @@ const styles = {
     marginTop: 0,
     marginBottom: 0,
     backgroundColor: colorway.background,
+<<<<<<< HEAD
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+=======
+    width: Dimensions.get('window').width
+>>>>>>> e0a16c728e166e2975fe22be66af4584d0bdbbc8
   },
 
   cardItemStyle: {
