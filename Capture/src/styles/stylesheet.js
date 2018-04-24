@@ -1,10 +1,10 @@
 import { Dimensions } from 'react-native';
 
 const colorway = {
-  one: '#0277BD',
-  two: '#CFD8DC',
+  one: '#1A63FF',
+  two: '#7FA8FF',
   three: '',
-  background: '#90A4AE',
+  background: 'white',
 }
 
 const styles = {
@@ -19,12 +19,16 @@ const styles = {
     marginTop: 0,
     marginBottom: 0,
     backgroundColor: colorway.background,
-    width: Dimensions.get('window').width
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 
   cardItemStyle: {
     backgroundColor: colorway.two,
-    margin: 5,
+    marginTop: 5,
+    marginRight: 5,
+    marginBottom: 0,
+    marginLeft: 5,
   },
 
   textStyle: {
@@ -81,15 +85,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
-  },
-
-  buttonStyle: {
-    backgroundColor: '#06317c',
-    marginBottom: 10,
-    marginLeft: 100,
-    marginTop: 15,
-    borderRadius: 5,
-  },
+  }
 
 };
 
