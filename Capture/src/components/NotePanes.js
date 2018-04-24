@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Dimensions, Alert, FlatList } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Keyboard } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Tabs from 'react-native-tabs';
+import PopupDialog, { ScaleAnimation, DialogButton, DialogTitle } from 'react-native-popup-dialog';
 import {
   Card,
   CardItem,
@@ -13,40 +14,101 @@ import {
   Left,
   Right,
   Icon,
-  Button
+  Button,
+  Item,
+  Input,
 } from 'native-base';
+import realm, { getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
+
+//import styles
+import {styles} from '../styles/stylesheet';
+
+const scaleAnimation = new ScaleAnimation();
 
 export default class NotePanes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: [
-        { id: 0, name: 'Urgent', notes: ['Pick up daughter from school', 'Finish capstone assignment', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum.'] },
-        { id: 1, name: 'School', notes: ['Science project due in 3 weeks', 'Read textbook pages 20-30'] },
-        { id: 2, name: 'Reminders', notes: ['Apple is on the fridge', 'Email boss about the raise', 'Meeting Sasha for dinner at 7'] }
-      ]
+      dataset: [],
+      currentPaneID: 0,
+      currentPaneName: '',
+      newNoteTitle: '',
     };
+    realm.addListener('change', () => {
+      this.reloadData();
+    });
   }
 
+  componentWillMount() {
+    getNotePanes().then((data) => {
+      this.setState({
+        dataset: data,
+      });
+    }).then(() => {
+      if (this.state.dataset.length === 0) {
+        console.log('DATA LENGTH ============', this.state.dataset.length);
+        const key = Math.floor(Date.now() / 1000);
+        const newPane = {
+          id: key,
+          paneName: 'Urgent',
+          notes: [{}],
+        };
+        console.log('NEW PANE =======', newPane);
+        insertNewNotePane(newPane);
+        this.setState({
+          currentPaneID: key,
+          currentPaneName: 'Urgent'
+        });
+        console.log('PANE ID=======', key);
+      } else {
+        this.setState({
+          currentPaneID: this.state.dataset[0].id,
+          currentPaneName: this.state.dataset[0].paneName
+        });
+        console.log('PANE ID=======', this.state.dataset[0].id);
+      }
+    });
+  }
+
+  changedPane = (index) => {
+    this.setState({
+      currentPaneID: this.state.dataset[index].id,
+      currentPaneName: this.state.dataset[index].paneName
+    });
+  }
+
+  reloadData() {
+    getNotePanes().then((data) => {
+      this.setState({ dataset: data });
+    });
+  }
   renderItem({ item, index }) {
     return (
       <Card style={styles.cardStyle}>
         <Header style={styles.headerStyle}>
           <Left style={styles.positionStyle}>
-            <Button transparent
-              onPress={() => this.props.navigation.navigate('NewPaneScreen')}
+            <Button
+              transparent
+              onPress={() => { this.newPane.show(); }}
               >
               <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
             </Button>
           </Left>
           <Body style={styles.positionStyle}>
-            <Button transparent>
-              <Text style={styles.textStyle}>{item.name}</Text>
+            <Button
+              transparent
+              onPress={() => { this.paneMenu.show(); }}
+            >
+              <Text style={styles.textStyle}>{item.paneName}</Text>
             </Button>
           </Body>
           <Right style={styles.positionStyle}>
-            <Button transparent
-              onPress={() => this.props.navigation.navigate('NewNoteScreen')}
+            <Button
+              transparent
+              onPress={() => {
+                this.props.navigation.navigate('NewNoteScreen',
+                { paneID: this.state.currentPaneID });
+              }}
               >
               <Icon type='Feather' name='plus' style={styles.iconStyle} />
             </Button>
@@ -55,71 +117,114 @@ export default class NotePanes extends Component {
 
         <Content>
           {
-            item.notes.map((item2, index2) => (
+            item.notes.map((noteItem, indexOfNote) => (
               <CardItem
+                style={styles.cardItemStyle}
                 bordered
                 body
                 button
-                key={index2}
-                onPress={
-                  (item2) => {
-                    item2 = this.item2;
-                    this.props.navigation.navigate('NewNoteScreen', {currentNote: 'dog'});
-                    console.log(item2);
+                key={indexOfNote}
+                onPress={() => {
+                  this.props.navigation.navigate('ExistingNoteScreen',
+                  {
+                    paneID: this.state.currentPaneID,
+                    note: noteItem.note,
                   }
-                }
-                >
-                <Body>
-                  if (item2.length > 20){
-
-                  } else {
-                    <Text numberOfLines={1}>{item2}</Text>
-                  }
-
-                </Body>
-              </CardItem>
-            ))
-          }
-        </Content>
-      </Card>
-    );
-  }
-
-  render() {
-    return (
-      <Container>
-        <Carousel
-          data={this.state.dataset}
-          renderItem={this.renderItem.bind(this)}
-          itemWidth={Dimensions.get('window').width}
-          sliderWidth={Dimensions.get('window').width}
-          />
-      </Container>
-    );
-  }
+                );
+              }}
+              >
+              <Body>
+                <Text >{noteItem.note}</Text>
+              </Body>
+            </CardItem>
+          ))
+        }
+      </Content>
+    </Card>
+  );
 }
 
-const styles = {
-  textStyle: {
-    fontSize: 20,
-    color: 'white',
-  },
-  cardStyle: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    marginLeft: 0,
-    marginRight: 0,
-    marginTop: 0,
-    marginBottom: 0,
-    backgroundColor: '#e6e9ef'
-  },
-  headerStyle: {
-    backgroundColor: '#06317c'
-  },
-  positionStyle: {
-    flex: 1,
-  },
-  iconStyle: {
-    color: 'white'
-  },
-};
+render() {
+  return (
+    <Container>
+      <Carousel
+        data={this.state.dataset}
+        renderItem={this.renderItem.bind(this)}
+        itemWidth={Dimensions.get('window').width}
+        sliderWidth={Dimensions.get('window').width}
+        onSnapToItem={this.changedPane}
+        ref={(carousel) => { this.carousel = carousel; }}
+      />
+      {/* PopupDialog for PANE MENU*/}
+      <PopupDialog
+        width={0.9}
+        ref={(paneMenu) => { this.paneMenu = paneMenu; }}
+        dialogAnimation={scaleAnimation}
+        dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
+        >
+        <DialogButton
+          text='Delete'
+          onPress={() => {
+            deleteNotePane(this.state.currentPaneID);
+            this.carousel.snapToPrev();
+            this.paneMenu.dismiss();
+          }}
+          key='button-delete'
+        />
+        <DialogButton
+          text='Edit Name'
+          onPress={() => {
+            this.paneMenu.dismiss();
+          }}
+          key='button-edit'
+          />
+        <DialogButton
+          text='Details'
+          onPress={() => {
+            this.paneMenu.dismiss();
+          }}
+          key='button-details'
+        />
+      </PopupDialog>
+      {/* PopupDialog for NEW PANE*/}
+      <PopupDialog
+        dialogStyle={{ position: 'absolute', top: '30%' }}
+        width={0.9}
+        height={0.2}
+        ref={(newPane) => { this.newPane = newPane; }}
+        dialogAnimation={scaleAnimation}
+        dialogTitle={<DialogTitle title='New Pane' />}
+        onDismissed={() => {
+          Keyboard.dismiss();
+          this.setState({ newNoteTitle: '' });
+        }}
+        >
+        <Item rounded>
+          <Input
+            placeholder='Enter Pane Title'
+            onChangeText={newNoteTitle => this.setState({ newNoteTitle })}
+            value={this.state.newNoteTitle}
+            />
+        </Item>
+        <DialogButton
+          text='Submit'
+          onPress={() => {
+            const key = Math.floor(Date.now() / 1000);
+            const newPane = {
+              id: key,
+              paneName: this.state.newNoteTitle,
+              notes: [],
+            };
+            console.log('NEW PANE =======', newPane);
+            insertNewNotePane(newPane);
+            Keyboard.dismiss();
+            this.newPane.dismiss();
+            this.setState({ newNoteTitle: '' });
+          }}
+          key='button-details'
+          />
+      </PopupDialog>
+    </Container>
+  );
+}
+}

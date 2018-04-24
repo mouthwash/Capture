@@ -4,6 +4,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import NewNote from './src/components/NewNote';
 import NotePanes from './src/components/NotePanes';
 import NewPane from './src/components/NewPaneTemplate';
+import ExistingNote from './src/components/ExistingNote';
 
 export default class App extends Component {
   render() {
@@ -28,12 +29,19 @@ const AppNavigator = StackNavigator({
       title: 'New note',
     }),
   },
-  NewPaneScreen: {
-    screen: NewPane,
-    navigationOptions: {
-      header: null,
-      title: 'New pane',
+    NewPaneScreen: {
+        screen: NewPane,
+        navigationOptions: {
+            header: null,
+            title: 'New pane',
+        },
     },
-  },
-  initialRouteName: 'NotePanesScreen'
+    ExistingNoteScreen: {
+        screen: ExistingNote,
+        navigationOptions: {
+            header: null,
+            title: 'Open Note',
+        },
+    },
+    initialRouteName: 'NotePanesScreen'
 });
