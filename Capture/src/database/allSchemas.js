@@ -89,7 +89,7 @@ export const editNotePane = async (newName, paneID) => {
 export const editNote = async (newNote, noteID) => {
   try{
     const realm = await Realm.open(databaseOptions);
-    const noteToUpdate = wait realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
+    const noteToUpdate = await realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
     realm.write(async() => {
       noteToUpdate.note = newNote;
       noteToUpdate.modifiedDate = Date();
