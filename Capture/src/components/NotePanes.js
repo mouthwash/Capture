@@ -18,7 +18,7 @@ import {
     Item,
     Input,
 } from 'native-base';
-import realm, { getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
+import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -167,7 +167,10 @@ export default class NotePanes extends Component {
                   <DialogButton
                     text='Edit Name'
                     onPress={() => {
+                        //get the new title.
+                        //editNotePane goes here
                         this.paneMenu.dismiss();
+                        this.editPane.show();
                     }}
                     key='button-edit'
                   />
@@ -211,9 +214,40 @@ export default class NotePanes extends Component {
                     this.newPane.dismiss();
                     this.setState({ newNoteTitle: '' });
                   }}
-                  key='button-details'
+                  key='button-newNote'
                 />
               </PopupDialog>
+
+              {/* Popup dialog for EditPane ==========================  LISZT*/}
+              <PopupDialog
+                dialogStyle={{ position: 'absolute', top: '30%' }}
+                width={0.9}
+                height={0.3}
+                ref={(editPane) => { this.editPane = editPane; }}
+                dialogAnimation={scaleAnimation}
+                dialogTitle={<DialogTitle title='Change Title' />}
+              >
+                  <Item rounded>
+                    <Input
+                      placeholder='Enter New Title'
+                      onChangeText={editPaneTitle => this.setState({ editPaneTitle })}
+                      value = {this.state.editPaneTitle}
+                    />
+                  </Item>
+                  <Button style = {styles.buttonStyle}
+                    onPress= {() => {
+                      console.log('EDIT PANE =======', this.state.editPaneTitle);
+                      editNotePane(this.state.editPaneTitle, this.state.currentPaneID);
+                      Keyboard.dismiss();
+                      this.editPane.dismiss();
+                      this.setState({ editNotePane: ''});
+                    }}
+                  >
+                    <Text style= {styles.textStyle}> Submit </Text>
+                  </Button>
+              </PopupDialog>
+              {/* END OF LISZT CODE ======================================= */}
+
               </Container>
         );
     }
@@ -247,5 +281,12 @@ const styles = {
     },
     inputStyle: {
       padding: 10,
+    },
+    buttonStyle: {
+      backgroundColor: '#06317c',
+      marginBottom: 10,
+      marginLeft: 100,
+      marginTop: 15,
+      borderRadius: 5,
     },
 };

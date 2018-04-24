@@ -74,5 +74,16 @@ export const deleteNotePane = async (paneID) => {
   }
 };
 
+//Edit a NotePane
+export const editNotePane = async (newName, paneID) => {
+  try{
+    const realm = await Realm.open(databaseOptions);
+    const PaneToUpdate = await realm.objectForPrimaryKey(NOTEPANE_SCHEMA, paneID);
+    realm.write(async () => PaneToUpdate.paneName = newName);
+  } catch (err) {
+    console.log('editNotePane Error', err);
+  }
+};
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export default new Realm(databaseOptions);
