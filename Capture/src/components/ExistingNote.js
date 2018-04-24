@@ -59,14 +59,18 @@ export default class ExistingNote extends Component {
             <Button
               transparent
               onPress={() => null}
-              >
+            >
               <Icon type='Feather' name='edit' style={styles.iconStyle} />
             </Button>
           </Right>
         </Header>
 
         <Content>
-          <Text> {this.state.note} </Text>
+          <TextInput
+            underlineColorAndroid='transparent'
+            value={this.state.note}
+            onChangeText={note => this.setState({ note })}
+          />
         </Content>
 
         <Footer style={styles.footerStyle}>

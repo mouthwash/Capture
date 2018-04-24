@@ -78,7 +78,15 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
-  }
+  },
+
+  buttonStyle: {
+    backgroundColor: '#06317c',
+    marginBottom: 10,
+    marginLeft: 100,
+    marginTop: 15,
+    borderRadius: 5,
+  },
 
 };
 
