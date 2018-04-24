@@ -11,6 +11,9 @@ import {
 } from 'native-base';
 import { insertNewNotePane } from '../database/allSchemas';
 
+//import styles
+import {styles} from '../styles/stylesheet';
+
 export default class NewPane extends Component {
     constructor(props) {
         super(props);
@@ -76,38 +79,3 @@ export default class NewPane extends Component {
         );
     }
 }
-
-const styles = {
-    textStyle: {
-      fontSize: 20,
-      color: 'white',
-    },
-    headerStyle: {
-        backgroundColor: '#06317c',
-        elevation: 0
-    },
-    inputStyle: {
-        textAlignVertical: 'top',
-        fontSize: 20,
-        paddingLeft: 15,
-        paddingRight: 15,
-        width: '100%'
-    },
-    iconStyle: {
-        color: 'white'
-    },
-    footerStyle: {
-        backgroundColor: 'transparent',
-    },
-    containerStyle: {
-        flex: 1,
-        alignItems: 'flex-start',
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-    buttonStyle: {
-        position: 'absolute',
-        paddingLeft: 20,
-        paddingBottom: 20,
-        bottom: 0,
-    }
-};

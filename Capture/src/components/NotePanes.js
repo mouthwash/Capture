@@ -20,6 +20,9 @@ import {
 } from 'native-base';
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
+//import styles
+import {styles} from '../styles/stylesheet';
+
 const scaleAnimation = new ScaleAnimation();
 
 export default class NotePanes extends Component {
@@ -117,14 +120,19 @@ export default class NotePanes extends Component {
                 {
                     item.notes.map((noteItem, indexOfNote) => (
                       <CardItem
+                        style={styles.cardItemStyle}
                         bordered
                         body
                         button
                         key={indexOfNote}
                         onPress={() => {
-                          this.props.navigation.navigate('NewNoteScreen');
+                          this.props.navigation.navigate('ExistingNoteScreen',
+                          {
+                            paneID: this.state.currentPaneID,
+                            note: noteItem.note,
                           }
-                        }
+                          );
+                        }}
                       >
                         <Body>
                           <Text >{noteItem.note}</Text>
@@ -190,7 +198,10 @@ export default class NotePanes extends Component {
                 ref={(newPane) => { this.newPane = newPane; }}
                 dialogAnimation={scaleAnimation}
                 dialogTitle={<DialogTitle title='New Pane' />}
-                onDismissed={() => { Keyboard.dismiss(); }}
+                onDismissed={() => {
+                  Keyboard.dismiss();
+                  this.setState({ newNoteTitle: '' });
+                }}
               >
               <Item rounded>
                 <Input
@@ -218,7 +229,7 @@ export default class NotePanes extends Component {
                 />
               </PopupDialog>
 
-              {/* Popup dialog for EditPane ==========================  LISZT*/}
+              {/* Popup dialog for EditPane ==========================*/}
               <PopupDialog
                 dialogStyle={{ position: 'absolute', top: '30%' }}
                 width={0.9}
@@ -252,41 +263,3 @@ export default class NotePanes extends Component {
         );
     }
 }
-
-const styles = {
-    textStyle: {
-        fontSize: 20,
-        color: 'white',
-    },
-    cardStyle: {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: 0,
-        marginBottom: 0,
-        backgroundColor: '#e6e9ef'
-    },
-    headerStyle: {
-        backgroundColor: '#06317c'
-    },
-    positionStyle: {
-        flex: 1,
-    },
-    iconStyle: {
-        color: 'white'
-    },
-    newPaneStyle: {
-      padding: 10,
-    },
-    inputStyle: {
-      padding: 10,
-    },
-    buttonStyle: {
-      backgroundColor: '#06317c',
-      marginBottom: 10,
-      marginLeft: 100,
-      marginTop: 15,
-      borderRadius: 5,
-    },
-};
