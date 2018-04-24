@@ -20,7 +20,6 @@ import {
 } from 'native-base';
 import realm, { getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
-//import styles
 import {styles} from '../styles/stylesheet';
 
 const scaleAnimation = new ScaleAnimation();
