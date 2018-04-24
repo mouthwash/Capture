@@ -52,7 +52,7 @@ export default class ExistingNote extends Component {
           </Left>
           <Body style={styles.positionStyle}>
             <Text style={styles.textStyle}>
-              Existing Header
+              Edit Note
             </Text>
           </Body>
           <Right>
@@ -66,7 +66,7 @@ export default class ExistingNote extends Component {
         </Header>
 
         <Content>
-          <Text> {this.state.note} </Text>
+          <Text style={styles.inputStyle}> {this.state.note} </Text>
         </Content>
 
         <Footer style={styles.footerStyle}>

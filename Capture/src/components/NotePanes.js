@@ -134,7 +134,7 @@ export default class NotePanes extends Component {
               }}
               >
               <Body>
-                <Text >{noteItem.note}</Text>
+                <Text numberOfLines={1}>{noteItem.note}</Text>
               </Body>
             </CardItem>
           ))
