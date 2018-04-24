@@ -67,6 +67,7 @@ export default class ExistingNote extends Component {
 
         <Content>
           <TextInput
+            style={styles.inputStyle}
             underlineColorAndroid='transparent'
             value={this.state.note}
             onChangeText={note => this.setState({ note })}
