@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 const colorway = {
   one: '#0277BD',
   two: '#CFD8DC',
@@ -17,6 +19,7 @@ const styles = {
     marginTop: 0,
     marginBottom: 0,
     backgroundColor: colorway.background,
+    width: Dimensions.get('window').width
   },
 
   cardItemStyle: {

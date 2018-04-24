@@ -52,7 +52,7 @@ export default class ExistingNote extends Component {
           </Left>
           <Body style={styles.positionStyle}>
             <Text style={styles.textStyle}>
-              Existing Header
+              Edit Note
             </Text>
           </Body>
           <Right>

@@ -7,28 +7,28 @@ import NewPane from './src/components/NewPaneTemplate';
 import ExistingNote from './src/components/ExistingNote';
 
 export default class App extends Component {
-    render() {
-        return (
-            <AppNavigator />
-        );
-    }
+  render() {
+    return (
+      <AppNavigator />
+    );
+  }
 }
 
 const AppNavigator = StackNavigator({
-    NotePanesScreen: {
-        screen: NotePanes,
-        navigationOptions: {
-            header: null,
-            title: 'Home',
-        },
+  NotePanesScreen: {
+    screen: NotePanes,
+    navigationOptions: {
+      header: null,
+      title: 'Home',
     },
-    NewNoteScreen: {
-        screen: NewNote,
-        navigationOptions: ({ navigation }) => ({
-            header: null,
-            title: 'New note',
-        }),
-    },
+  },
+  NewNoteScreen: {
+    screen: NewNote,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      title: 'New note',
+    }),
+  },
     NewPaneScreen: {
         screen: NewPane,
         navigationOptions: {
