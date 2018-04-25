@@ -89,13 +89,26 @@ export const editNotePane = async (newName, paneID) => {
 export const editNote = async (newNote, noteID) => {
   try {
     const realm = await Realm.open(databaseOptions);
-    const noteToUpdate = await realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
-    realm.write(async() => {
-      noteToUpdate.note = newNote;
-      noteToUpdate.modifiedDate = Date();
+    const NoteToUpdate = await realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
+    realm.write(async () => {
+      NoteToUpdate.note = newNote;
+      NoteToUpdate.modifiedDate = Date();
     });
   } catch (err) {
     console.log('editNote error', err);
+  }
+};
+
+//Delete a Note
+export const deleteNote = async (noteID) => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    const NoteToDelete = await realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
+    realm.write(async () => {
+      await realm.delete(NoteToDelete);
+    });
+  } catch (err) {
+    console.log('deleteNote', err);
   }
 };
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import {
@@ -15,7 +15,7 @@ import {
   Text,
   Content
 } from 'native-base';
-import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
+import realm, { editNote, deleteNote } from '../database/allSchemas';
 
 //import styles
 import { styles } from '../styles/stylesheet';
@@ -28,6 +28,7 @@ export default class ExistingNote extends Component {
       time: '',
       paneID: this.props.navigation.state.params.paneID,
       note: this.props.navigation.state.params.note,
+      noteID: this.props.navigation.state.params.noteID,
     };
   }
 
@@ -66,12 +67,24 @@ export default class ExistingNote extends Component {
         </Header>
 
         <Content>
-          <Text> {this.state.note} </Text>
+          <TextInput
+            style={styles.inputStyle}
+            multiline
+            autoCorrect
+            underlineColorAndroid='transparent'
+            onChangeText={note => this.setState({ note })}
+            value={this.state.note}
+          />
         </Content>
 
         <Footer style={styles.footerStyle}>
           <FooterTab style={styles.footerStyle}>
-            <Button onPress={null} >
+            <Button
+              onPress={() => {
+                deleteNote(this.state.noteID);
+                goBack();
+              }}
+            >
               <Icon type='Feather' name='trash-2' />
             </Button>
             <Button >
@@ -80,7 +93,12 @@ export default class ExistingNote extends Component {
             <Button >
               <Icon type='Feather' name='image' />
             </Button>
-            <Button>
+            <Button
+              onPress={() => {
+                editNote(this.state.note, this.state.noteID);
+                goBack();
+              }}
+            >
               <Icon type='Feather' name='check' />
             </Button>
           </FooterTab>

@@ -130,8 +130,8 @@ export default class NotePanes extends Component {
                           {
                             paneID: this.state.currentPaneID,
                             note: noteItem.note,
-                          }
-                          );
+                            noteID: noteItem.id,
+                          });
                         }}
                       >
                         <Body>
