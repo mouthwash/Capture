@@ -18,7 +18,7 @@ import {
 import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
 
 //import styles
-import {styles} from '../styles/stylesheet';
+import { styles } from '../styles/stylesheet';
 
 export default class ExistingNote extends Component {
   constructor(props) {
@@ -59,7 +59,7 @@ export default class ExistingNote extends Component {
             <Button
               transparent
               onPress={() => null}
-              >
+            >
               <Icon type='Feather' name='edit' style={styles.iconStyle} />
             </Button>
           </Right>

@@ -37,7 +37,7 @@ export const insertNewNotePane = async newNotePane => {
     const realm = await Realm.open(databaseOptions);
     realm.write(async () => await realm.create(NOTEPANE_SCHEMA, newNotePane));
   } catch (err) {
-    console.log('!!!!!!!!!!!!!!!!!!', err);
+    console.log('insertNewNotePane', err);
     }
   };
 
@@ -47,7 +47,7 @@ export const getNotePanes = async () => {
     const Panes = realm.objects(NOTEPANE_SCHEMA);
     return Array.from(Panes);
     } catch (err) {
-        console.log('GET ERROR');
+        console.log('getNotePanes', err);
     }
 };
 
@@ -60,7 +60,7 @@ export const insertNewNote = async (newNote, paneID) => {
     console.log('THE TRUE PANE WE ARE ADDING TO============', PaneToWriteTo.paneName);
     realm.write(async () => await PaneToWriteTo.notes.push(newNote));
   } catch (err) {
-    console.log('############', err);
+    console.log('insertNewNote', err);
   }
 };
 
@@ -76,10 +76,10 @@ export const deleteNotePane = async (paneID) => {
 
 //Edit a NotePane
 export const editNotePane = async (newName, paneID) => {
-  try{
+  try {
     const realm = await Realm.open(databaseOptions);
     const PaneToUpdate = await realm.objectForPrimaryKey(NOTEPANE_SCHEMA, paneID);
-    realm.write(async () => PaneToUpdate.paneName = newName);
+    realm.write(async () => { PaneToUpdate.paneName = newName; });
   } catch (err) {
     console.log('editNotePane Error', err);
   }
@@ -87,7 +87,7 @@ export const editNotePane = async (newName, paneID) => {
 
 //Edit a Note
 export const editNote = async (newNote, noteID) => {
-  try{
+  try {
     const realm = await Realm.open(databaseOptions);
     const noteToUpdate = await realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
     realm.write(async() => {

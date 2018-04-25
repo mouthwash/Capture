@@ -21,7 +21,7 @@ import {
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import {styles} from '../styles/stylesheet';
+import { styles } from '../styles/stylesheet';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -51,7 +51,7 @@ export default class NotePanes extends Component {
       const newPane = {
         id: key,
         paneName: 'Urgent',
-        notes: [{}],
+        notes: [],
       };
       console.log('NEW PANE =======', newPane);
       insertNewNotePane(newPane);
@@ -242,19 +242,20 @@ export default class NotePanes extends Component {
                     <Input
                       placeholder='Enter New Title'
                       onChangeText={editPaneTitle => this.setState({ editPaneTitle })}
-                      value = {this.state.editPaneTitle}
+                      value={this.state.editPaneTitle}
                     />
                   </Item>
-                  <Button style = {styles.buttonStyle}
-                    onPress= {() => {
+                  <Button
+                    style={styles.buttonStyle}
+                    onPress={() => {
                       console.log('EDIT PANE =======', this.state.editPaneTitle);
                       editNotePane(this.state.editPaneTitle, this.state.currentPaneID);
                       Keyboard.dismiss();
                       this.editPane.dismiss();
-                      this.setState({ editNotePane: ''});
+                      this.setState({ editNotePane: '' });
                     }}
                   >
-                    <Text style= {styles.textStyle}> Submit </Text>
+                    <Text style={styles.textStyle}> Submit </Text>
                   </Button>
               </PopupDialog>
               {/* END OF LISZT CODE ======================================= */}
