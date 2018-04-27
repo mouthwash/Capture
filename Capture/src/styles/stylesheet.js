@@ -81,6 +81,11 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
+  },
+
+  dialogStyle: {
+    position: 'absolute',
+    top: '30%',
   }
 
 };

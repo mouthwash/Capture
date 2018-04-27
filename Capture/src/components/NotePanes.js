@@ -188,9 +188,9 @@ render() {
       </PopupDialog>
       {/* PopupDialog for NEW PANE*/}
       <PopupDialog
-        dialogStyle={{ position: 'absolute', top: '30%' }}
+        dialogStyle={styles.dialogStyle}
         width={0.9}
-        height={0.2}
+        height={0.25}
         ref={(newPane) => { this.newPane = newPane; }}
         dialogAnimation={scaleAnimation}
         dialogTitle={<DialogTitle title='New Pane' />}
@@ -199,9 +199,9 @@ render() {
           this.setState({ newNoteTitle: '' });
         }}
       >
-        <Item rounded>
+        <Item underline>
           <Input
-            placeholder='Enter Pane Title'
+            placeholder='Enter pane title'
             onChangeText={newNoteTitle => this.setState({ newNoteTitle })}
             value={this.state.newNoteTitle}
           />
