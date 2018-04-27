@@ -159,6 +159,8 @@ export default class NewNote extends Component {
                                 creationDate: Date(),
                                 modifiedDate: Date(),
                                 finished: false,
+                                title: this.state.text,
+                                priority: 0,
                               };
                               console.log('NEW NOTE =======', newNote);
                               insertNewNote(newNote, this.state.paneID);

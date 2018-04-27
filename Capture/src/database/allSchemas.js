@@ -13,6 +13,8 @@ export const NoteSchema = {
     creationDate: 'date',
     modifiedDate: 'date',
     finished: { type: 'bool', default: false },
+    title: 'string',
+    priority: 'int' //low medium or high or none. 
   }
 };
 

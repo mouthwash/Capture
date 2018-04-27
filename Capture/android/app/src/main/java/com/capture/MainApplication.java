@@ -1,4 +1,4 @@
-package com.capture_2;
+package com.capture;
 
 import android.app.Application;
 
