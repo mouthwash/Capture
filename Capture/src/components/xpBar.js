@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import {Container, Content, ProgressBar} from 'native-base';
+import {Container, Content, Text} from 'native-base';
+import { Dimensions} from 'react-native';
 
-export default class xpBar extends Component {
+import * as Progress from 'react-native-progress';
+
+
+export default class XP_bar extends Component {
   render() {
     return (
       <Container>
         <Content>
-          <ProgressBar progress={30} />
+          <Progress.Bar
+            progress={0.3}
+            width={Dimensions.get('window').width}
+            />
         </Content>
       </Container>
     );
