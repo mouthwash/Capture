@@ -21,7 +21,7 @@ import {
 import realm, { getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import {styles} from '../styles/stylesheet';
+import { styles } from '../styles/stylesheet';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -90,7 +90,7 @@ export default class NotePanes extends Component {
             <Button
               transparent
               onPress={() => { this.newPane.show(); }}
-              >
+            >
               <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
             </Button>
           </Left>
@@ -109,7 +109,7 @@ export default class NotePanes extends Component {
                 this.props.navigation.navigate('NewNoteScreen',
                 { paneID: this.state.currentPaneID });
               }}
-              >
+            >
               <Icon type='Feather' name='plus' style={styles.iconStyle} />
             </Button>
           </Right>
@@ -161,7 +161,7 @@ render() {
         ref={(paneMenu) => { this.paneMenu = paneMenu; }}
         dialogAnimation={scaleAnimation}
         dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
-        >
+      >
         <DialogButton
           text='Delete'
           onPress={() => {
@@ -177,7 +177,7 @@ render() {
             this.paneMenu.dismiss();
           }}
           key='button-edit'
-          />
+        />
         <DialogButton
           text='Details'
           onPress={() => {
@@ -198,13 +198,13 @@ render() {
           Keyboard.dismiss();
           this.setState({ newNoteTitle: '' });
         }}
-        >
+      >
         <Item rounded>
           <Input
             placeholder='Enter Pane Title'
             onChangeText={newNoteTitle => this.setState({ newNoteTitle })}
             value={this.state.newNoteTitle}
-            />
+          />
         </Item>
         <DialogButton
           text='Submit'
@@ -222,7 +222,7 @@ render() {
             this.setState({ newNoteTitle: '' });
           }}
           key='button-details'
-          />
+        />
       </PopupDialog>
     </Container>
   );

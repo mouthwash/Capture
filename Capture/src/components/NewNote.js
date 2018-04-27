@@ -18,7 +18,7 @@ import {
 import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
 
 //import styles
-import {styles} from '../styles/stylesheet';
+import { styles } from '../styles/stylesheet';
 
 export default class NewNote extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class NewNote extends Component {
   render() {
     const { goBack } = this.props.navigation;
     console.log('PANE ID OF NEW NOTE=========', this.state.paneID);
-    const slideAnimation = new SlideAnimation ({
+    const slideAnimation = new SlideAnimation({
       slideFrom: 'bottom',
     });
 
@@ -45,7 +45,7 @@ export default class NewNote extends Component {
             <Button
               transparent
               onPress={() => goBack()}
-              >
+            >
               <Icon style={styles.iconStyle} name='arrow-back' />
             </Button>
           </Left>
@@ -58,7 +58,7 @@ export default class NewNote extends Component {
             <Button
               transparent
               onPress={() => null}
-              >
+            >
               <Icon type='Feather' name='clock' style={styles.iconStyle} />
             </Button>
           </Right>
@@ -73,14 +73,14 @@ export default class NewNote extends Component {
             underlineColorAndroid='transparent'
             onChangeText={text => this.setState({ text })}
             value={this.state.text}
-            />
+          />
           <View>
             <PopupDialog
               ref={(popupDialog) => { this.popupDialog = popupDialog; }}
               dialogAnimation={slideAnimation}
               dialogTitle={<DialogTitle title="Set a reminder" />}
               haveOverlay={false}
-              >
+            >
               {/* User chooses a date */}
               <View style={styles.datePicker}>
                 <DatePicker
@@ -110,7 +110,7 @@ export default class NewNote extends Component {
                   onCloseModal={() => {
                     this.popupDialog.show();
                   }}
-                  />
+                />
                 {/* User chooses a time */}
                 <DatePicker
                   date={this.state.date}
@@ -130,10 +130,10 @@ export default class NewNote extends Component {
                     }
                   }}
                   onDateChange={(date) => {
-                    this.setState({time: date});
+                    this.setState({ time: date });
                     this.popupDialog.dismiss();
                   }}
-                  />
+                />
               </View>
             </PopupDialog>
           </View>

@@ -14,20 +14,20 @@ export default class App extends Component {
 }
 
 const AppNavigator = StackNavigator({
-  NotePanesScreen: {
-    screen: NotePanes,
-    navigationOptions: {
-      header: null,
-      title: 'Home',
+    NotePanesScreen: {
+        screen: NotePanes,
+        navigationOptions: {
+            header: null,
+            title: 'Home',
+        },
     },
-  },
-  NewNoteScreen: {
-    screen: NewNote,
-    navigationOptions: ({ navigation }) => ({
-      header: null,
-      title: 'New note',
-    }),
-  },
+    NewNoteScreen: {
+        screen: NewNote,
+        navigationOptions: {
+            header: null,
+            title: 'New note',
+        },
+    },
     ExistingNoteScreen: {
         screen: ExistingNote,
         navigationOptions: {
