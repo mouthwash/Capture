@@ -129,13 +129,14 @@ export default class NotePanes extends Component {
                           this.props.navigation.navigate('ExistingNoteScreen',
                           {
                             paneID: this.state.currentPaneID,
-                            note: noteItem.note,
+                            noteTitle: noteItem.title,
                             noteID: noteItem.id,
+                            note: noteItem.note,
                           });
                         }}
                       >
                         <Body>
-                          <Text >{noteItem.note}</Text>
+                          <Text >{noteItem.title}</Text>
                         </Body>
                       </CardItem>
                     ))
