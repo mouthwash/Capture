@@ -28,6 +28,7 @@ export default class ExistingNote extends Component {
       time: '',
       paneID: this.props.navigation.state.params.paneID,
       note: this.props.navigation.state.params.note,
+      title: this.props.navigation.state.params.noteTitle,
       noteID: this.props.navigation.state.params.noteID,
     };
   }
@@ -52,9 +53,11 @@ export default class ExistingNote extends Component {
             </Button>
           </Left>
           <Body style={styles.positionStyle}>
-            <Text style={styles.textStyle}>
-              Existing Header
-            </Text>
+            <Button transparent>
+              <Text style={styles.textStyle}>
+                {this.state.title}
+              </Text>
+            </Button>
           </Body>
           <Right>
             <Button
@@ -67,6 +70,13 @@ export default class ExistingNote extends Component {
         </Header>
 
         <Content>
+          <TextInput
+            style={styles.titleStyle}
+            autoCorrect
+            onChangeText={title => this.setState({ title })}
+            value= {this.state.title}
+          />
+        
           <TextInput
             style={styles.inputStyle}
             multiline
