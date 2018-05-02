@@ -12,9 +12,9 @@ export const NoteSchema = {
     note: { type: 'string', indexed: true },
     creationDate: 'date',
     modifiedDate: 'date',
+    dueDate: { type: 'date', default: null },
     finished: { type: 'bool', default: false },
     title: 'string',
-    priority: 'int' //low medium or high or none. 
   }
 };
 

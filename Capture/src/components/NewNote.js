@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
-import DatePicker from 'react-native-datepicker';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import {
   Container,
@@ -15,20 +15,30 @@ import {
   Text,
   Content
 } from 'native-base';
-import realm, { updateNotePane, deleteNotePane, queryAllNotePanes, insertNewNote } from '../database/allSchemas';
+import { insertNewNote } from '../database/allSchemas';
 
 //import styles
-import {styles} from '../styles/stylesheet';
+import { styles } from '../styles/stylesheet';
 
 export default class NewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: '',
-            time: '',
+            date_time: '',
+            isDateTimePickerVisible: false,
             paneID: this.props.navigation.state.params.paneID,
         };
     }
+
+  showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    this.setState({ date_time: date });
+    this.hideDateTimePicker();
+  };
 
     render() {
         const { goBack } = this.props.navigation;
@@ -57,7 +67,7 @@ export default class NewNote extends Component {
                     <Right>
                         <Button
                             transparent
-                            onPress={() => null}
+                            onPress={this.showDateTimePicker}
                         >
                             <Icon type='Feather' name='clock' style={styles.iconStyle} />
                         </Button>
@@ -74,69 +84,6 @@ export default class NewNote extends Component {
                         onChangeText={text => this.setState({ text })}
                         value={this.state.text}
                     />
-                    <View>
-                        <PopupDialog
-                            ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-                            dialogAnimation={slideAnimation}
-                            dialogTitle={<DialogTitle title="Set a reminder" />}
-                            haveOverlay={false}
-                        >
-                            {/* User chooses a date */}
-                            <View style={styles.datePicker}>
-                                <DatePicker
-                                    date={this.state.date}
-                                    mode="date"
-                                    placeholder="Select date"
-                                    format="MM-DD-YYYY"
-                                    minDate="01-01-2018"
-                                    maxDate="12-31-2025"
-                                    confirmBtnText="Confirm"
-                                    cancelBtnText="Cancel"
-                                    customStyles={{
-                                        dateIcon: {
-                                            position: 'absolute',
-                                            left: 0,
-                                            top: 4,
-                                            marginLeft: 0
-                                        },
-                                        dateInput: {
-                                            marginLeft: 36
-                                        }
-                                    }}
-                                    onDateChange={(date) => {
-                                        this.setState({ date: date });
-                                        this.popupDialog.dismiss();
-                                    }}
-                                    onCloseModal={() => {
-                                        this.popupDialog.show();
-                                    }}
-                                />
-                                {/* User chooses a time */}
-                                <DatePicker
-                                    date={this.state.date}
-                                    mode="time"
-                                    placeholder="Select time"
-                                    confirmBtnText="Confirm"
-                                    cancelBtnText="Cancel"
-                                    customStyles={{
-                                        dateIcon: {
-                                            position: 'absolute',
-                                            left: 0,
-                                            top: 4,
-                                            marginLeft: 0
-                                        },
-                                        dateInput: {
-                                            marginLeft: 36
-                                        }
-                                    }}
-                                    onDateChange={(date) => {
-                                        this.setState({time: date});
-                                        this.popupDialog.dismiss();
-                                    }}
-                                />
-                            </View>
-                        </PopupDialog>
-                    </View>
                 </Content>
 
                 <Footer style={styles.footerStyle}>
@@ -160,7 +107,7 @@ export default class NewNote extends Component {
                                 modifiedDate: Date(),
                                 finished: false,
                                 title: this.state.text,
-                                priority: 0,
+                                dueDate: this.state.date_time,
                               };
                               console.log('NEW NOTE =======', newNote);
                               insertNewNote(newNote, this.state.paneID);
@@ -172,6 +119,14 @@ export default class NewNote extends Component {
                         </Button>
                     </FooterTab >
                 </Footer>
+
+                  <DateTimePicker
+                    mode='datetime'
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this.handleDatePicked}
+                    onCancel={this.hideDateTimePicker}
+                  />
+
 
             </Container>
         );
