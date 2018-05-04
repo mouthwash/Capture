@@ -106,7 +106,8 @@ export default class NotePanes extends Component {
                         }}
                       >
                         <Body>
-                          <Text >{noteItem.note}</Text>
+                          <Text>{noteItem.note}</Text>
+                          <Text>{noteItem.dueDate.toString().substr(0, 25)}</Text>
                         </Body>
                       </CardItem>
                     ))

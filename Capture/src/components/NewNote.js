@@ -122,6 +122,7 @@ export default class NewNote extends Component {
 
                   <DateTimePicker
                     mode='datetime'
+                    is24Hour={false}
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this.handleDatePicked}
                     onCancel={this.hideDateTimePicker}
