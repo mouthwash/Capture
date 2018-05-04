@@ -88,10 +88,10 @@ const styles = {
   },
 
   buttonStyle: {
-    position: 'absolute',
-    paddingLeft: 20,
-    paddingBottom: 20,
-    bottom: 0,
+    borderRadius: '2px',
+    marginLeft: '20%',
+    marginBottom: '20%',
+    bottom: '20%',
   },
 
   datePicker: {
