@@ -52,19 +52,21 @@ const styles = {
 
   inputStyle: {
       textAlignVertical: 'top',
-      fontSize: 20,
-      paddingLeft: 15,
+      fontSize: 14,
+      paddingLeft: 20,
       paddingRight: 15,
       paddingTop: 20,
       width: '100%'
   },
 
   titleStyle: {
-    fontSize: 24,
-    paddingLeft: 15,
     paddingRight: 15,
+    paddingLeft: 5,
     paddingTop: 20,
-    width: '100%'
+    paddingBottom: 5,
+    width: '90%',
+    borderBottomWidth: 1,
+    borderColor: '#b2b9c4'
   },
 
   footerStyle: {
