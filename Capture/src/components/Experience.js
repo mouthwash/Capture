@@ -25,11 +25,11 @@ import XP_bar from './xpBar';
 export default class Experience extends Component {
   render () {
     return (
-      <Container>
-        <View>
+      <Container style={{flex: 1, flexDirection: 'row'}}>
+        <View style={styles.barStyle}>
           <Text>left</Text>
         </View>
-        <View>
+        <View style={styles.levelStyle}>
           <Text>Right</Text>
         </View>
       </Container>

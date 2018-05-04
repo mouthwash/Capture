@@ -93,7 +93,19 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
-  }
+  },
+
+  barStyle: {
+    padding: 5,
+    width: '80%',
+    height: 'auto',
+  },
+
+  levelStyle: {
+    padding: 5,
+    width: '20%',
+    height: 'auto',
+  },
 
 };
 
