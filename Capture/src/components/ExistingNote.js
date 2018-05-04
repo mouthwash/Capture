@@ -35,7 +35,7 @@ export default class ExistingNote extends Component {
   render() {
     const { goBack } = this.props.navigation;
     console.log('PANE ID OF ExistingNote=========', this.state.paneID);
-    const slideAnimation = new SlideAnimation ({
+    const slideAnimation = new SlideAnimation({
       slideFrom: 'bottom',
     });
 

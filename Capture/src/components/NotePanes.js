@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Keyboard, Picker, Modal, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Tabs from 'react-native-tabs';
 import PopupDialog, { ScaleAnimation, DialogButton, DialogTitle } from 'react-native-popup-dialog';
@@ -83,6 +83,15 @@ export default class NotePanes extends Component {
       this.setState({ dataset: data });
     });
   }
+
+  state = {
+    modalVisible: false,
+  };
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   renderItem({ item, index }) {
     return (
       <Card style={styles.cardStyle}>
@@ -91,7 +100,7 @@ export default class NotePanes extends Component {
             <Button
               transparent
               onPress={() => { this.newPane.show(); }}
-              >
+            >
               <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
             </Button>
           </Left>
@@ -99,7 +108,7 @@ export default class NotePanes extends Component {
             <Button
               transparent
               onPress={() => { this.paneMenu.show(); }}
-              >
+            >
               <Text style={styles.textStyle}>{item.paneName}</Text>
             </Button>
           </Body>
@@ -110,7 +119,7 @@ export default class NotePanes extends Component {
                 this.props.navigation.navigate('NewNoteScreen',
                 { paneID: this.state.currentPaneID });
               }}
-              >
+            >
               <Icon type='Feather' name='plus' style={styles.iconStyle} />
             </Button>
           </Right>
@@ -133,7 +142,7 @@ export default class NotePanes extends Component {
                     noteID: noteItem.id,
                   });
                 }}
-                >
+              >
                 <Body>
                   <Text >{noteItem.note}</Text>
                 </Body>
@@ -155,46 +164,51 @@ export default class NotePanes extends Component {
           sliderWidth={Dimensions.get('window').width}
           onSnapToItem={this.changedPane}
           ref={(carousel) => { this.carousel = carousel; }}
-          />
-        {/* PopupDialog for PANE MENU*/}
-        <PopupDialog
-          width={0.9}
-          ref={(paneMenu) => { this.paneMenu = paneMenu; }}
-          dialogAnimation={scaleAnimation}
-          dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
-          >
-          <DialogButton
-            text='Delete'
-            onPress={() => {
-              deleteNotePane(this.state.currentPaneID);
-              this.carousel.snapToPrev();
-              this.paneMenu.dismiss();
-            }}
-            key='button-delete'
-          />
-          <DialogButton
-            text='Edit Name'
-            onPress={() => {
-              //get the new title.
-              //editNotePane goes here
-              this.paneMenu.dismiss();
-              this.editPane.show();
-            }}
-            key='button-edit'
-          />
-          <DialogButton
-            text='Details'
-            onPress={() => {
-              this.paneMenu.dismiss();
-            }}
-            key='button-details'
-          />
-        </PopupDialog>
+        />
+
+        <View
+          style={{ marginTop: 22 }}
+        >
+            {/* PopupDialog for PANE MENU*/}
+            <Picker
+              width={0.9}
+              mode='dropdown'
+              testID={(paneMenu) => { this.paneMenu = paneMenu; }}
+            >
+              <Picker.Item
+                label='Delete'
+                onPress={() => {
+                  deleteNotePane(this.state.currentPaneID);
+                  this.carousel.snapToPrev();
+                  this.paneMenu.dismiss();
+                }}
+                value='button-delete'
+              />
+              <Picker.Item
+                label='Edit Name'
+                onPress={() => {
+                  //get the new title.
+                  //editNotePane goes here
+                  this.paneMenu.dismiss();
+                  this.editPane.show();
+                }}
+                value='button-edit'
+              />
+              <Picker.Item
+                label='Details'
+                onPress={() => {
+                  this.paneMenu.dismiss();
+                }}
+                value='button-details'
+              />
+            </Picker>
+        </View>
+
         {/* PopupDialog for NEW PANE*/}
         <PopupDialog
           dialogStyle={{ position: 'absolute', top: '30%' }}
           width={0.9}
-          height={0.2}
+          height={0.25}
           ref={(newPane) => { this.newPane = newPane; }}
           dialogAnimation={scaleAnimation}
           dialogTitle={<DialogTitle title='New Pane' />}
@@ -203,12 +217,12 @@ export default class NotePanes extends Component {
             this.setState({ newNoteTitle: '' });
           }}
         >
-          <Item rounded>
+          <Item underline>
             <Input
               placeholder='Enter Pane Title'
               onChangeText={newNoteTitle => this.setState({ newNoteTitle })}
               value={this.state.newNoteTitle}
-              />
+            />
           </Item>
           <DialogButton
             text='Submit'
@@ -226,7 +240,7 @@ export default class NotePanes extends Component {
               this.setState({ newNoteTitle: '' });
             }}
             key='button-newNote'
-            />
+          />
         </PopupDialog>
 
         {/* Popup dialog for EditPane ==========================*/}
@@ -237,13 +251,13 @@ export default class NotePanes extends Component {
           ref={(editPane) => { this.editPane = editPane; }}
           dialogAnimation={scaleAnimation}
           dialogTitle={<DialogTitle title='Change Title' />}
-          >
+        >
           <Item rounded>
             <Input
               placeholder='Enter New Title'
               onChangeText={editPaneTitle => this.setState({ editPaneTitle })}
               value={this.state.editPaneTitle}
-              />
+            />
           </Item>
           <Button
             style={styles.buttonStyle}
@@ -254,7 +268,7 @@ export default class NotePanes extends Component {
               this.editPane.dismiss();
               this.setState({ editNotePane: '' });
             }}
-            >
+          >
             <Text style={styles.textStyle}> Submit </Text>
           </Button>
         </PopupDialog>
