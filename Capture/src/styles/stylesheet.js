@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 
+//default colorway
 const colorway = {
   one: '#1A63FF',
   two: '#7FA8FF',
@@ -7,10 +8,16 @@ const colorway = {
   background: 'white',
 }
 
+//Colors actually being used.
+let colorone = colorway.one
+let colortwo = colorway.two
+let colorthree = colorway.three
+let backgroundcolor = colorway.background
+
 const styles = {
 
   headerStyle: {
-    backgroundColor: colorway.one,
+    backgroundColor: colorone,
   },
 
   cardStyle: {
@@ -18,7 +25,7 @@ const styles = {
     marginRight: 0,
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: colorway.background,
+    backgroundColor: backgroundcolor,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
