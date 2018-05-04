@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Keyboard, } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Tabs from 'react-native-tabs';
 import PopupDialog, { ScaleAnimation, DialogButton, DialogTitle } from 'react-native-popup-dialog';
@@ -23,6 +23,7 @@ import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } 
 
 //import styles
 import { styles } from '../styles/stylesheet';
+import xpBar from './xpBar';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -100,13 +101,14 @@ export default class NotePanes extends Component {
                           this.props.navigation.navigate('ExistingNoteScreen',
                           {
                             paneID: this.state.currentPaneID,
-                            note: noteItem.note,
+                            noteTitle: noteItem.title,
                             noteID: noteItem.id,
+                            note: noteItem.note,
                           });
                         }}
                       >
                         <Body>
-                          <Text>{noteItem.note}</Text>
+                          <Text>{noteItem.title}</Text>
                           <Text>{noteItem.dueDate.toString().substr(0, 25)}</Text>
                         </Body>
                       </CardItem>
@@ -157,6 +159,9 @@ export default class NotePanes extends Component {
                 onSnapToItem={this.changedPane}
                 ref={(carousel) => { this.carousel = carousel; }}
               />
+              <Footer>
+                <xpBar />
+              </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
                 width={0.9}
@@ -261,8 +266,7 @@ export default class NotePanes extends Component {
                   </Button>
               </PopupDialog>
               {/* END OF LISZT CODE ======================================= */}
-
-              </Container>
-        );
-    }
+      </Container>
+    );
+  }
 }

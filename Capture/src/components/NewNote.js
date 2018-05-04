@@ -19,7 +19,7 @@ import {
 import { insertNewNote } from '../database/allSchemas';
 
 //import styles
-import { styles } from '../styles/stylesheet';
+import { styles, colorway } from '../styles/stylesheet';
 
 export default class NewNote extends Component {
     constructor(props) {
@@ -109,6 +109,16 @@ export default class NewNote extends Component {
                 </Header>
 
                 <Content>
+                    {/*Title Input*/}
+                    <TextInput
+                      style = {styles.titleStyle}
+                      autoCorrect
+                      value={this.state.title}
+                      onChangeText={title => this.setState({ title})}
+                      placeholder = 'Title'
+                      placeholderTextColor= {colorway.one}
+                      />
+                    {/*Note Input*/}
                     <TextInput
                         style={styles.inputStyle}
                         multiline
@@ -140,7 +150,7 @@ export default class NewNote extends Component {
                                 creationDate: Date(),
                                 modifiedDate: Date(),
                                 finished: false,
-                                title: this.state.text,
+                                title: this.state.title,
                                 dueDate: this.state.date_time,
                               };
                               console.log('NEW NOTE =======', newNote);

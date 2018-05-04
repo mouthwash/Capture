@@ -5,7 +5,7 @@ const colorway = {
   two: '#7FA8FF',
   three: '',
   background: 'white',
-}
+};
 
 const styles = {
 
@@ -57,6 +57,14 @@ const styles = {
       paddingRight: 15,
       paddingTop: 20,
       width: '100%'
+  },
+
+  titleStyle: {
+    fontSize: 24,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 20,
+    width: '100%'
   },
 
   footerStyle: {
