@@ -94,6 +94,10 @@ const styles = {
     alignItems: 'center',
     width: 350,
   },
+  expStyle: {
+    flex: 1,
+    flexDirection: 'row',
+  },
 
   barStyle: {
     padding: 5,
