@@ -27,7 +27,7 @@ export default class Experience extends Component {
     return (
       <Container style={styles.expStyle}>
         <View style={styles.barStyle}>
-          <Text>left</Text>
+          <XP_bar />
         </View>
         <View style={styles.levelStyle}>
           <Text>Right</Text>

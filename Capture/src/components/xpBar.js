@@ -4,6 +4,7 @@ import { Dimensions} from 'react-native';
 
 import * as Progress from 'react-native-progress';
 
+import { styles, colorway } from '../styles/stylesheet';
 
 export default class XP_bar extends Component {
   render() {
@@ -12,7 +13,10 @@ export default class XP_bar extends Component {
         <Content>
           <Progress.Bar
             progress={0.3}
-            width={Dimensions.get('window').width}
+            width={null}
+            height={10}
+            color={colorway.two}
+            borderColor={colorway.background}
             />
         </Content>
       </Container>

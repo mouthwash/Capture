@@ -97,12 +97,14 @@ const styles = {
   expStyle: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 
   barStyle: {
     padding: 5,
     width: '80%',
     height: 'auto',
+    justifyContent: 'center',
   },
 
   levelStyle: {
