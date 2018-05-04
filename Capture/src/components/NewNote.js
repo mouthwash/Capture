@@ -25,7 +25,7 @@ export default class NewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date_time: '',
+            date_time: new Date(0),
             isDateTimePickerVisible: false,
             paneID: this.props.navigation.state.params.paneID,
         };
@@ -38,13 +38,14 @@ export default class NewNote extends Component {
             },
 
             // (required) Called when a remote or local notification is opened or received
-            onNotification(notification) {
+            onNotification: (notification) => {
                 console.log('NOTIFICATION:', notification);
 
                 // process the notification
 
                 // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-                notification.finish(PushNotificationIOS.FetchResult.NoData);
+                // notification.finish(PushNotificationIOS.FetchResult.NoData);
+                //notification.finish(PushNotification.FetchResult.NoData);
             },
 
           // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications,
@@ -59,7 +60,6 @@ export default class NewNote extends Component {
             },
 
             popInitialNotification: true,
-
             requestPermissions: true,
         });
     }
@@ -145,10 +145,13 @@ export default class NewNote extends Component {
                               };
                               console.log('NEW NOTE =======', newNote);
                               insertNewNote(newNote, this.state.paneID);
-                              PushNotification.localNotificationSchedule({
-                                message: 'Note Expiring', // (required)
-                                date: this.state.date_time
-                              });
+                                if (this.state.date_time !== '') {
+                                PushNotification.localNotificationSchedule({
+                                  message: 'Note Expiring', // (required)
+                                  date: this.state.date_time,
+                                  data: {},
+                                });
+                              }
                               goBack();
                             }
                           }
