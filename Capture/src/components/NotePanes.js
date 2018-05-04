@@ -23,7 +23,7 @@ import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } 
 
 //import styles
 import { styles } from '../styles/stylesheet';
-import XP_bar from './xpBar';
+import Experience from './Experience';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -160,7 +160,7 @@ export default class NotePanes extends Component {
           ref={(carousel) => { this.carousel = carousel; }}
         />
       <Footer>
-        <XP_bar />
+        <Experience />
       </Footer>
         {/* PopupDialog for PANE MENU*/}
         <PopupDialog
