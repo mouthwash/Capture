@@ -6,7 +6,7 @@ const colorway = {
   two: '#7FA8FF',
   three: '',
   background: 'white',
-}
+};
 
 //Colors actually being used.
 let colorone = colorway.one
@@ -88,7 +88,7 @@ const styles = {
   },
 
   buttonStyle: {
-    borderRadius: '2px',
+    //borderRadius: '2px',
     marginLeft: '20%',
     marginBottom: '20%',
     bottom: '20%',

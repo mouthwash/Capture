@@ -76,7 +76,7 @@ export default class ExistingNote extends Component {
             onChangeText={title => this.setState({ title })}
             value= {this.state.title}
           />
-        
+
           <TextInput
             style={styles.inputStyle}
             multiline
@@ -105,7 +105,7 @@ export default class ExistingNote extends Component {
             </Button>
             <Button
               onPress={() => {
-                editNote(this.state.note, this.state.noteID);
+                editNote(this.state.note, this.state.title, this.state.noteID);
                 goBack();
               }}
             >

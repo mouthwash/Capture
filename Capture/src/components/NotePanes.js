@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Keyboard, } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Tabs from 'react-native-tabs';
 import PopupDialog, { ScaleAnimation, DialogButton, DialogTitle } from 'react-native-popup-dialog';
@@ -17,11 +17,13 @@ import {
     Button,
     Item,
     Input,
+    Footer,
 } from 'native-base';
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import { colorone, colortwo, styles } from '../styles/stylesheet';
+import { styles, colorone, colortwo } from '../styles/stylesheet';
+import XpBar from './xpBar';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -87,36 +89,6 @@ export default class NotePanes extends Component {
     renderItem({ item, index }) {
         return (
             <Card style={styles.cardStyle}>
-                <Header style={styles.headerStyle}>
-                    <Left style={styles.positionStyle}>
-                        <Button
-                          transparent
-                          onPress={() => { this.newPane.show(); }}
-                        >
-                            <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
-                        </Button>
-                    </Left>
-                    <Body style={styles.positionStyle}>
-                        <Button
-                          transparent
-                          onPress={() => { this.paneMenu.show(); }}
-                        >
-                            <Text style={styles.textStyle}>{item.paneName}</Text>
-                        </Button>
-                    </Body>
-                    <Right style={styles.positionStyle}>
-                        <Button
-                          transparent
-                          onPress={() => {
-                            this.props.navigation.navigate('NewNoteScreen',
-                            { paneID: this.state.currentPaneID });
-                          }}
-                        >
-                            <Icon type='Feather' name='plus' style={styles.iconStyle} />
-                        </Button>
-                    </Right>
-                </Header>
-
                 <Content>
                 {
                     item.notes.map((noteItem, indexOfNote) => (
@@ -137,7 +109,8 @@ export default class NotePanes extends Component {
                         }}
                       >
                         <Body>
-                          <Text >{noteItem.title}</Text>
+                          <Text>{noteItem.title}</Text>
+                          <Text>{noteItem.dueDate.toString().substr(0, 25)}</Text>
                         </Body>
                       </CardItem>
                     ))
@@ -150,6 +123,35 @@ export default class NotePanes extends Component {
     render() {
         return (
             <Container>
+              <Header style={styles.headerStyle}>
+                  <Left style={styles.positionStyle}>
+                      <Button
+                        transparent
+                        onPress={() => { this.newPane.show(); }}
+                      >
+                          <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
+                      </Button>
+                  </Left>
+                  <Body style={styles.positionStyle}>
+                      <Button
+                        transparent
+                        onPress={() => { this.paneMenu.show(); }}
+                      >
+                          <Text style={styles.textStyle}>{this.state.currentPaneName}</Text>
+                      </Button>
+                  </Body>
+                  <Right style={styles.positionStyle}>
+                      <Button
+                        transparent
+                        onPress={() => {
+                          this.props.navigation.navigate('NewNoteScreen',
+                          { paneID: this.state.currentPaneID });
+                        }}
+                      >
+                          <Icon type='Feather' name='plus' style={styles.iconStyle} />
+                      </Button>
+                  </Right>
+              </Header>
               <Carousel
                 data={this.state.dataset}
                 renderItem={this.renderItem.bind(this)}
@@ -158,6 +160,9 @@ export default class NotePanes extends Component {
                 onSnapToItem={this.changedPane}
                 ref={(carousel) => { this.carousel = carousel; }}
               />
+              <Footer>
+                <XpBar />
+              </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
                 width={0.9}
@@ -170,6 +175,7 @@ export default class NotePanes extends Component {
                     onPress={() => {
                         deleteNotePane(this.state.currentPaneID);
                         this.carousel.snapToPrev();
+
                         this.paneMenu.dismiss();
                     }}
                     key='button-delete'
@@ -194,9 +200,9 @@ export default class NotePanes extends Component {
               </PopupDialog>
               {/* PopupDialog for NEW PANE*/}
               <PopupDialog
-                dialogStyle={{ position: 'absolute', top: '30%' }}
+                dialogStyle={{ position: 'absolute', top: '25%' }}
                 width={0.9}
-                height={0.2}
+                height={0.25}
                 ref={(newPane) => { this.newPane = newPane; }}
                 dialogAnimation={scaleAnimation}
                 dialogTitle={<DialogTitle title='New Pane' />}
@@ -265,7 +271,7 @@ export default class NotePanes extends Component {
               {/* Start of color picker Dialog */}
               <PopupDialog>
               </PopupDialog>
-              
+
               </Container>
         );
     }
