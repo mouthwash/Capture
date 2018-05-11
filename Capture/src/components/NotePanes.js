@@ -19,10 +19,11 @@ import {
     Input,
     Footer,
 } from 'native-base';
+import {ColorPicker} from 'react-native-color-picker';
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import { styles, colorone, colortwo } from '../styles/stylesheet';
+import { styles, colorone, colortwo, background } from '../styles/stylesheet';
 import XpBar from './xpBar';
 
 const scaleAnimation = new ScaleAnimation();
@@ -268,10 +269,53 @@ export default class NotePanes extends Component {
               </PopupDialog>
               {/* END OF Edit Pane ======================================= */}
 
-              {/* Start of color picker Dialog */}
-              <PopupDialog>
+              {/* COLOR PICKER DIALOG*/}
+              <PopupDialog
+                dialogStyle={{ position: 'absolute', top: '30%' }}
+                width={0.9}
+                height={0.3}
+                ref={(changeColor) => { this.changeColor = changeColor; }}
+                dialogAnimation={scaleAnimation}
+                dialogTitle={<DialogTitle title='Change Color' />}
+                >
+
               </PopupDialog>
 
+              {/* COLOR PICKER MENU */}
+              <PopupDialog
+                width={0.9}
+                ref={(colorMenu) => { this.colorMenu = colorMenu; }}
+                dialogAnimation={scaleAnimation}
+                dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
+              >
+                  <DialogButton
+                    text='Primary color'
+                    onPress={() => {
+                        deleteNotePane(this.state.currentPaneID);
+                        this.carousel.snapToPrev();
+
+                        this.paneMenu.dismiss();
+                    }}
+                    key='button-delete'
+                  />
+                  <DialogButton
+                    text='Secondary Color'
+                    onPress={() => {
+                        //get the new title.
+                        //editNotePane goes here
+                        this.paneMenu.dismiss();
+                        this.editPane.show();
+                    }}
+                    key='button-edit'
+                  />
+                  <DialogButton
+                    text='Background Color'
+                    onPress={() => {
+                        this.paneMenu.dismiss();
+                    }}
+                    key='button-details'
+                  />
+              </PopupDialog>
               </Container>
         );
     }
