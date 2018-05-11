@@ -100,7 +100,25 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
-  }
+  },
+  expStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
+  barStyle: {
+    padding: 5,
+    width: '80%',
+    height: 'auto',
+    justifyContent: 'center',
+  },
+
+  levelStyle: {
+    padding: 5,
+    width: '20%',
+    height: 'auto',
+  },
 
 };
 
