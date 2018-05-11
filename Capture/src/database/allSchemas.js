@@ -88,13 +88,14 @@ export const editNotePane = async (newName, paneID) => {
 };
 
 //Edit a Note
-export const editNote = async (newNote, noteID) => {
+export const editNote = async (newNote, newTitle, noteID) => {
   try {
     const realm = await Realm.open(databaseOptions);
     const NoteToUpdate = await realm.objectForPrimaryKey(NOTE_SCHEMA, noteID);
     realm.write(async () => {
       NoteToUpdate.note = newNote;
       NoteToUpdate.modifiedDate = Date();
+      NoteToUpdate.title = newTitle;
     });
   } catch (err) {
     console.log('editNote error', err);

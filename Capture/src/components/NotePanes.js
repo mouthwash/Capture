@@ -22,7 +22,7 @@ import {
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import { styles } from '../styles/stylesheet';
+import { styles, colorone, colortwo } from '../styles/stylesheet';
 import Experience from './Experience';
 
 const scaleAnimation = new ScaleAnimation();
@@ -35,6 +35,7 @@ export default class NotePanes extends Component {
             currentPaneID: 0,
             currentPaneName: '',
             newNoteTitle: '',
+            colors: {colorone: colorone, colortwo: colortwo},
         };
         realm.addListener('change', () => {
           this.reloadData();
@@ -265,8 +266,13 @@ export default class NotePanes extends Component {
                     <Text style={styles.textStyle}> Submit </Text>
                   </Button>
               </PopupDialog>
-              {/* END OF LISZT CODE ======================================= */}
-      </Container>
-    );
-  }
+              {/* END OF Edit Pane ======================================= */}
+
+              {/* Start of color picker Dialog */}
+              <PopupDialog>
+              </PopupDialog>
+
+              </Container>
+        );
+    }
 }
