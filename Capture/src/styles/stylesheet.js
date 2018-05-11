@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 
+//default colorway
 const colorway = {
   one: '#1A63FF',
   two: '#7FA8FF',
@@ -7,10 +8,16 @@ const colorway = {
   background: 'white',
 };
 
+//Colors actually being used.
+let colorone = colorway.one
+let colortwo = colorway.two
+let colorthree = colorway.three
+let backgroundcolor = colorway.background
+
 const styles = {
 
   headerStyle: {
-    backgroundColor: colorway.one,
+    backgroundColor: colorone,
   },
 
   cardStyle: {
@@ -18,7 +25,7 @@ const styles = {
     marginRight: 0,
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: colorway.background,
+    backgroundColor: backgroundcolor,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
@@ -81,10 +88,10 @@ const styles = {
   },
 
   buttonStyle: {
-    position: 'absolute',
-    paddingLeft: 20,
-    paddingBottom: 20,
-    bottom: 0,
+    //borderRadius: '2px',
+    marginLeft: '20%',
+    marginBottom: '20%',
+    bottom: '20%',
   },
 
   datePicker: {
@@ -93,7 +100,25 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
-  }
+  },
+  expStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
+  barStyle: {
+    padding: 5,
+    width: '80%',
+    height: 'auto',
+    justifyContent: 'center',
+  },
+
+  levelStyle: {
+    padding: 5,
+    width: '20%',
+    height: 'auto',
+  },
 
 };
 
