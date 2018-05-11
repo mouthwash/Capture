@@ -17,7 +17,7 @@ import {
     Button,
     Item,
     Input,
-    Footer
+    Footer,
 } from 'native-base';
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
@@ -88,36 +88,6 @@ export default class NotePanes extends Component {
     renderItem({ item, index }) {
         return (
             <Card style={styles.cardStyle}>
-                <Header style={styles.headerStyle}>
-                    <Left style={styles.positionStyle}>
-                        <Button
-                          transparent
-                          onPress={() => { this.newPane.show(); }}
-                        >
-                            <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
-                        </Button>
-                    </Left>
-                    <Body style={styles.positionStyle}>
-                        <Button
-                          transparent
-                          onPress={() => { this.paneMenu.show(); }}
-                        >
-                            <Text style={styles.textStyle}>{item.paneName}</Text>
-                        </Button>
-                    </Body>
-                    <Right style={styles.positionStyle}>
-                        <Button
-                          transparent
-                          onPress={() => {
-                            this.props.navigation.navigate('NewNoteScreen',
-                            { paneID: this.state.currentPaneID });
-                          }}
-                        >
-                            <Icon type='Feather' name='plus' style={styles.iconStyle} />
-                        </Button>
-                    </Right>
-                </Header>
-
                 <Content>
                 {
                     item.notes.map((noteItem, indexOfNote) => (
@@ -138,7 +108,8 @@ export default class NotePanes extends Component {
                         }}
                       >
                         <Body>
-                          <Text >{noteItem.title}</Text>
+                          <Text>{noteItem.title}</Text>
+                          <Text>{noteItem.dueDate.toString().substr(0, 25)}</Text>
                         </Body>
                       </CardItem>
                     ))
@@ -148,122 +119,153 @@ export default class NotePanes extends Component {
         );
     }
 
-  render() {
-    return (
-      <Container>
-        <Carousel
-          data={this.state.dataset}
-          renderItem={this.renderItem.bind(this)}
-          itemWidth={Dimensions.get('window').width}
-          sliderWidth={Dimensions.get('window').width}
-          onSnapToItem={this.changedPane}
-          ref={(carousel) => { this.carousel = carousel; }}
-        />
-      <Footer>
-        <Experience />
-      </Footer>
-        {/* PopupDialog for PANE MENU*/}
-        <PopupDialog
-          width={0.9}
-          ref={(paneMenu) => { this.paneMenu = paneMenu; }}
-          dialogAnimation={scaleAnimation}
-          dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
-        >
-          <DialogButton
-            text='Delete'
-            onPress={() => {
-              deleteNotePane(this.state.currentPaneID);
-              this.carousel.snapToPrev();
-              this.paneMenu.dismiss();
-            }}
-            key='button-delete'
-          />
-          <DialogButton
-            text='Edit Name'
-            onPress={() => {
-              //get the new title.
-              //editNotePane goes here
-              this.paneMenu.dismiss();
-              this.editPane.show();
-            }}
-            key='button-edit'
-          />
-          <DialogButton
-            text='Details'
-            onPress={() => {
-              this.paneMenu.dismiss();
-            }}
-            key='button-details'
-          />
-        </PopupDialog>
-        {/* PopupDialog for NEW PANE*/}
-        <PopupDialog
-          dialogStyle={{ position: 'absolute', top: '30%' }}
-          width={0.9}
-          height={0.2}
-          ref={(newPane) => { this.newPane = newPane; }}
-          dialogAnimation={scaleAnimation}
-          dialogTitle={<DialogTitle title='New Pane' />}
-          onDismissed={() => {
-            Keyboard.dismiss();
-            this.setState({ newNoteTitle: '' });
-          }}
-        >
-          <Item rounded>
-            <Input
-              placeholder='Enter Pane Title'
-              onChangeText={newNoteTitle => this.setState({ newNoteTitle })}
-              value={this.state.newNoteTitle}
-            />
-          </Item>
-          <DialogButton
-            text='Submit'
-            onPress={() => {
-              const key = Math.floor(Date.now() / 1000);
-              const newPane = {
-                id: key,
-                paneName: this.state.newNoteTitle,
-                notes: [],
-              };
-              console.log('NEW PANE =======', newPane);
-              insertNewNotePane(newPane);
-              Keyboard.dismiss();
-              this.newPane.dismiss();
-              this.setState({ newNoteTitle: '' });
-            }}
-            key='button-newNote'
-          />
-        </PopupDialog>
-
-        {/* Popup dialog for EditPane ==========================*/}
-        <PopupDialog
-          dialogStyle={{ position: 'absolute', top: '30%' }}
-          width={0.9}
-          height={0.3}
-          ref={(editPane) => { this.editPane = editPane; }}
-          dialogAnimation={scaleAnimation}
-          dialogTitle={<DialogTitle title='Change Title' />}
-        >
-            <Item rounded>
-              <Input
-                placeholder='Enter New Title'
-                onChangeText={editPaneTitle => this.setState({ editPaneTitle })}
-                value={this.state.editPaneTitle}
+    render() {
+        return (
+            <Container>
+              <Header style={styles.headerStyle}>
+                  <Left style={styles.positionStyle}>
+                      <Button
+                        transparent
+                        onPress={() => { this.newPane.show(); }}
+                      >
+                          <Icon type='Ionicons' name='paper' style={styles.iconStyle} />
+                      </Button>
+                  </Left>
+                  <Body style={styles.positionStyle}>
+                      <Button
+                        transparent
+                        onPress={() => { this.paneMenu.show(); }}
+                      >
+                          <Text style={styles.textStyle}>{this.state.currentPaneName}</Text>
+                      </Button>
+                  </Body>
+                  <Right style={styles.positionStyle}>
+                      <Button
+                        transparent
+                        onPress={() => {
+                          this.props.navigation.navigate('NewNoteScreen',
+                          { paneID: this.state.currentPaneID });
+                        }}
+                      >
+                          <Icon type='Feather' name='plus' style={styles.iconStyle} />
+                      </Button>
+                  </Right>
+              </Header>
+              <Carousel
+                data={this.state.dataset}
+                renderItem={this.renderItem.bind(this)}
+                itemWidth={Dimensions.get('window').width}
+                sliderWidth={Dimensions.get('window').width}
+                onSnapToItem={this.changedPane}
+                ref={(carousel) => { this.carousel = carousel; }}
               />
-            </Item>
-            <Button
-              style={styles.buttonStyle}
-              onPress={() => {
-                console.log('EDIT PANE =======', this.state.editPaneTitle);
-                editNotePane(this.state.editPaneTitle, this.state.currentPaneID);
-                Keyboard.dismiss();
-                this.editPane.dismiss();
-                this.setState({ editNotePane: '' });
-              }}
-            >
-              <Text style={styles.textStyle}> Submit </Text>
-            </Button>
-        </PopupDialog>
+              <Footer>
+                <Experience />
+              </Footer>
+              {/* PopupDialog for PANE MENU*/}
+              <PopupDialog
+                width={0.9}
+                ref={(paneMenu) => { this.paneMenu = paneMenu; }}
+                dialogAnimation={scaleAnimation}
+                dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
+              >
+                  <DialogButton
+                    text='Delete'
+                    onPress={() => {
+                        deleteNotePane(this.state.currentPaneID);
+                        this.carousel.snapToPrev();
+
+                        this.paneMenu.dismiss();
+                    }}
+                    key='button-delete'
+                  />
+                  <DialogButton
+                    text='Edit Name'
+                    onPress={() => {
+                        //get the new title.
+                        //editNotePane goes here
+                        this.paneMenu.dismiss();
+                        this.editPane.show();
+                    }}
+                    key='button-edit'
+                  />
+                  <DialogButton
+                    text='Details'
+                    onPress={() => {
+                        this.paneMenu.dismiss();
+                    }}
+                    key='button-details'
+                  />
+              </PopupDialog>
+              {/* PopupDialog for NEW PANE*/}
+              <PopupDialog
+                dialogStyle={{ position: 'absolute', top: '25%' }}
+                width={0.9}
+                height={0.25}
+                ref={(newPane) => { this.newPane = newPane; }}
+                dialogAnimation={scaleAnimation}
+                dialogTitle={<DialogTitle title='New Pane' />}
+                onDismissed={() => {
+                  Keyboard.dismiss();
+                  this.setState({ newNoteTitle: '' });
+                }}
+              >
+              <Item rounded>
+                <Input
+                  placeholder='Enter Pane Title'
+                  onChangeText={newNoteTitle => this.setState({ newNoteTitle })}
+                  value={this.state.newNoteTitle}
+                />
+              </Item>
+                <DialogButton
+                  text='Submit'
+                  onPress={() => {
+                    const key = Math.floor(Date.now() / 1000);
+                    const newPane = {
+                      id: key,
+                      paneName: this.state.newNoteTitle,
+                      notes: [],
+                    };
+                    console.log('NEW PANE =======', newPane);
+                    insertNewNotePane(newPane);
+                    Keyboard.dismiss();
+                    this.newPane.dismiss();
+                    this.setState({ newNoteTitle: '' });
+                  }}
+                  key='button-newNote'
+                />
+              </PopupDialog>
+
+              {/* Popup dialog for EditPane ==========================*/}
+              <PopupDialog
+                dialogStyle={{ position: 'absolute', top: '30%' }}
+                width={0.9}
+                height={0.3}
+                ref={(editPane) => { this.editPane = editPane; }}
+                dialogAnimation={scaleAnimation}
+                dialogTitle={<DialogTitle title='Change Title' />}
+              >
+                  <Item rounded>
+                    <Input
+                      placeholder='Enter New Title'
+                      onChangeText={editPaneTitle => this.setState({ editPaneTitle })}
+                      value={this.state.editPaneTitle}
+                    />
+                  </Item>
+                  <Button
+                    style={styles.buttonStyle}
+                    onPress={() => {
+                      console.log('EDIT PANE =======', this.state.editPaneTitle);
+                      editNotePane(this.state.editPaneTitle, this.state.currentPaneID);
+                      Keyboard.dismiss();
+                      this.editPane.dismiss();
+                      this.setState({ editNotePane: '' });
+                    }}
+                  >
+                    <Text style={styles.textStyle}> Submit </Text>
+                  </Button>
+              </PopupDialog>
+              {/* END OF LISZT CODE ======================================= */}
       </Container>
     );
   }

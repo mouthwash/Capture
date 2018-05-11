@@ -6,7 +6,7 @@ import * as Progress from 'react-native-progress';
 
 import { styles, colorway } from '../styles/stylesheet';
 
-export default class XP_bar extends Component {
+export default class xpBar extends Component {
   render() {
     return (
       <Container>

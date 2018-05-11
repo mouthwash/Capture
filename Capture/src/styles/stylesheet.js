@@ -5,7 +5,7 @@ const colorway = {
   two: '#7FA8FF',
   three: '',
   background: 'white',
-}
+};
 
 const styles = {
 
