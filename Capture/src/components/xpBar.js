@@ -5,7 +5,7 @@ import { Dimensions} from 'react-native';
 import * as Progress from 'react-native-progress';
 
 
-export default class XP_bar extends Component {
+export default class xpBar extends Component {
   render() {
     return (
       <Container>
