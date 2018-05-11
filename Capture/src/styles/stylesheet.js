@@ -2,10 +2,10 @@ import { Dimensions } from 'react-native';
 
 //default colorway
 const colorway = {
-  one: '#1A63FF',
-  two: '#7FA8FF',
+  one: '#191970',
+  two: '#E6E6EF',
   three: '',
-  background: 'white',
+  background: '#9E9EC2',
 };
 
 //Colors actually being used.
@@ -31,7 +31,7 @@ const styles = {
   },
 
   cardItemStyle: {
-    backgroundColor: colorway.two,
+    backgroundColor: colortwo,
     marginTop: 5,
     marginRight: 5,
     marginBottom: 0,
@@ -75,7 +75,7 @@ const styles = {
   },
 
   footerStyle: {
-      backgroundColor: 'transparent',
+      backgroundColor: colorone,
   },
 
   iconStyle: {
@@ -118,6 +118,11 @@ const styles = {
     padding: 5,
     width: '20%',
     height: 'auto',
+  },
+
+  levelText: {
+    color: colortwo,
+    textAlign: 'center',
   },
 
 };

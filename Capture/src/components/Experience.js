@@ -21,6 +21,7 @@ import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } 
 //import styles
 import { styles } from '../styles/stylesheet';
 import XP_bar from './xpBar';
+import Level from './level';
 
 export default class Experience extends Component {
   render () {
@@ -30,7 +31,7 @@ export default class Experience extends Component {
           <XP_bar />
         </View>
         <View style={styles.levelStyle}>
-          <Text>Right</Text>
+          <Level />
         </View>
       </Container>
     );

@@ -160,7 +160,7 @@ export default class NotePanes extends Component {
                 onSnapToItem={this.changedPane}
                 ref={(carousel) => { this.carousel = carousel; }}
               />
-              <Footer>
+            <Footer style={styles.footerStyle}>
                 <Experience />
               </Footer>
               {/* PopupDialog for PANE MENU*/}
