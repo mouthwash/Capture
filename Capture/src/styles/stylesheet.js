@@ -120,6 +120,11 @@ const styles = {
     height: 'auto',
   },
 
+  levelText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+
 };
 
 
