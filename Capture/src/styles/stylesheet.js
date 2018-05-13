@@ -2,10 +2,10 @@ import { Dimensions } from 'react-native';
 
 //default colorway
 const colorway = {
-  one: '#191970',
-  two: '#E6E6EF',
+  one: '#37474f',
+  two: '#d5dee2',
   three: '',
-  background: '#9E9EC2',
+  background: '#56707c',
 };
 
 //Colors actually being used.
@@ -18,6 +18,10 @@ const styles = {
 
   headerStyle: {
     backgroundColor: colorone,
+  },
+
+  footerStyle: {
+      backgroundColor: colorone,
   },
 
   cardStyle: {
@@ -40,7 +44,7 @@ const styles = {
 
   textStyle: {
     fontSize: 20,
-    color: 'white',
+    color: colortwo,
     textAlign: 'center',
     margin: 'auto',
   },
@@ -50,7 +54,7 @@ const styles = {
   },
 
   iconStyle: {
-    color: 'white'
+    color: colortwo
   },
 
   newPaneStyle: {
@@ -74,21 +78,12 @@ const styles = {
     width: '100%'
   },
 
-  footerStyle: {
-      backgroundColor: colorone,
-  },
-
-  iconStyle: {
-      color: 'white'
-  },
-
   containerStyle: {
     flex: 1,
     alignItems: 'flex-start',
   },
 
   buttonStyle: {
-    //borderRadius: '2px',
     marginLeft: '20%',
     marginBottom: '20%',
     bottom: '20%',
@@ -131,4 +126,8 @@ const styles = {
 export {
   styles,
   colorway,
+  colorone,
+  colortwo,
+  colorthree,
+  backgroundcolor,
 };
