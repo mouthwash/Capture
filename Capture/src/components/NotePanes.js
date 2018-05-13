@@ -19,7 +19,7 @@ import {
     Input,
     Footer,
 } from 'native-base';
-import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
+import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane, getXP, createXP } from '../database/allSchemas';
 
 //import styles
 import { styles } from '../styles/stylesheet';
@@ -35,6 +35,7 @@ export default class NotePanes extends Component {
             currentPaneID: 0,
             currentPaneName: '',
             newNoteTitle: '',
+            currentPercent: 0.0,
         };
         realm.addListener('change', () => {
           this.reloadData();
@@ -70,10 +71,16 @@ export default class NotePanes extends Component {
       console.log('PANE ID=======', this.state.dataset[0].id);
     }
     });
+    createXP();
+    getXP().then((xpData) => {
+      this.setState({ currentPercent: xpData.xpPercent });
+      console.log('CONSTRUCTOR ==', this.state.currentPercent);
+    });
   }
 
   changedPane = (index) => {
       this.setState({
+
           currentPaneID: this.state.dataset[index].id,
           currentPaneName: this.state.dataset[index].paneName
       });
@@ -84,7 +91,12 @@ export default class NotePanes extends Component {
     getNotePanes().then((data) => {
       this.setState({ dataset: data });
     });
+    getXP().then((xpData) => {
+      this.setState({ currentPercent: xpData.xpPercent });
+      console.log('WHENRELOADDATA PERCENT ==', this.state.currentPercent);
+    });
   }
+
     renderItem({ item, index }) {
         return (
             <Card style={styles.cardStyle}>
@@ -160,7 +172,7 @@ export default class NotePanes extends Component {
                 ref={(carousel) => { this.carousel = carousel; }}
               />
               <Footer>
-                <XpBar />
+                <XpBar currentPercentFromParent={this.state.currentPercent} />
               </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
