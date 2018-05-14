@@ -80,10 +80,6 @@ const styles = {
     borderColor: '#b2b9c4'
   },
 
-  footerStyle: {
-      backgroundColor: 'transparent',
-  },
-
   containerStyle: {
     flex: 1,
     alignItems: 'flex-start',
