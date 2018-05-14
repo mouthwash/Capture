@@ -44,7 +44,7 @@ export default class NewNote extends Component {
                 // process the notification
 
                 // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-                // notification.finish(PushNotificationIOS.FetchResult.NoData);
+                notification.finish(PushNotificationIOS.FetchResult.NoData);
                 //notification.finish(PushNotification.FetchResult.NoData);
             },
 
@@ -157,8 +157,9 @@ export default class NewNote extends Component {
                               insertNewNote(newNote, this.state.paneID);
                               updateXP();
                                 if (this.state.date_time !== '') {
+                                  console.log('time is: ', this.state.date_time);
                                 PushNotification.localNotificationSchedule({
-                                  message: 'Note Expiring', // (required)
+                                  message: this.state.title, // (required)
                                   date: this.state.date_time,
                                   data: {},
                                 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import {
@@ -36,7 +36,7 @@ export default class ExistingNote extends Component {
   render() {
     const { goBack } = this.props.navigation;
     console.log('PANE ID OF ExistingNote=========', this.state.paneID);
-    const slideAnimation = new SlideAnimation ({
+    const slideAnimation = new SlideAnimation({
       slideFrom: 'bottom',
     });
 
@@ -70,12 +70,16 @@ export default class ExistingNote extends Component {
         </Header>
 
         <Content>
-          <TextInput
-            style={styles.titleStyle}
-            autoCorrect
-            onChangeText={title => this.setState({ title })}
-            value= {this.state.title}
-          />
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.titleStyle}>
+              <TextInput
+                style={{ fontSize: 24 }}
+                autoCorrect
+                onChangeText={title => this.setState({ title })}
+                value={this.state.title}
+              />
+            </View>
+          </View>
 
           <TextInput
             style={styles.inputStyle}
