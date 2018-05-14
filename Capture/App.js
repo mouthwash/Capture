@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { MenuProvider } from 'react-native-popup-menu';
 import NewNote from './src/components/NewNote';
 import NotePanes from './src/components/NotePanes';
 import ExistingNote from './src/components/ExistingNote';
 
 export default class App extends Component {
-    render() {
-        return (
-            <AppNavigator />
-        );
-    }
+  render() {
+    return (
+      <AppNavigator />
+    );
+  }
 }
 
 const AppNavigator = StackNavigator({
@@ -23,10 +22,10 @@ const AppNavigator = StackNavigator({
     },
     NewNoteScreen: {
         screen: NewNote,
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: {
             header: null,
             title: 'New note',
-        }),
+        },
     },
     ExistingNoteScreen: {
         screen: ExistingNote,
