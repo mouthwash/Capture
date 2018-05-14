@@ -117,6 +117,7 @@ export default class NewNote extends Component {
                       onChangeText={title => this.setState({ title})}
                       placeholder = 'Title'
                       placeholderTextColor= {colorway.one}
+                      underlineColorAndroid = 'transparent'
                       />
                     {/*Note Input*/}
                     <TextInput

@@ -76,6 +76,7 @@ export default class ExistingNote extends Component {
                 style={{ fontSize: 24 }}
                 autoCorrect
                 onChangeText={title => this.setState({ title })}
+                underlineColorAndroid='transparent'
                 value={this.state.title}
               />
             </View>

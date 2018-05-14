@@ -256,7 +256,7 @@ export default class NotePanes extends Component {
 
               {/* Popup dialog for EditPane ==========================*/}
               <PopupDialog
-                dialogStyle={{ position: 'absolute', top: '30%' }}
+                dialogStyle={{ position: 'absolute', top: '15%' }}
                 width={0.9}
                 height={0.3}
                 ref={(editPane) => { this.editPane = editPane; }}
@@ -271,7 +271,7 @@ export default class NotePanes extends Component {
                     />
                   </Item>
                   <Button
-                    style={styles.buttonStyle}
+                    style={{left:'50%', top:'5%'}}
                     onPress={() => {
                       console.log('EDIT PANE =======', this.state.editPaneTitle);
                       editNotePane(this.state.editPaneTitle, this.state.currentPaneID);
