@@ -23,8 +23,8 @@ import {ColorPicker} from 'react-native-color-picker';
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
 
 //import styles
-import { styles, colorone, colortwo, background } from '../styles/stylesheet';
-import XpBar from './xpBar';
+import { styles, colorway, colorone, colortwo, background } from '../styles/stylesheet';
+import Experience from './Experience';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -89,12 +89,12 @@ export default class NotePanes extends Component {
   }
     renderItem({ item, index }) {
         return (
-            <Card style={styles.cardStyle}>
+            <Card style={[styles.cardStyle, {backgroundColor: this.state.colors.background}]}>
                 <Content>
                 {
                     item.notes.map((noteItem, indexOfNote) => (
                       <CardItem
-                        style={styles.cardItemStyle}
+                        style={[styles.cardItemStyle, {backgroundColor: this.state.colors.colortwo}]}
                         bordered
                         body
                         button
@@ -124,7 +124,7 @@ export default class NotePanes extends Component {
     render() {
         return (
             <Container>
-              <Header style={styles.headerStyle}>
+              <Header style={[styles.headerStyle, {backgroundColor: this.state.colors.colorone}]}>
                   <Left style={styles.positionStyle}>
                       <Button
                         transparent
@@ -162,7 +162,7 @@ export default class NotePanes extends Component {
                 ref={(carousel) => { this.carousel = carousel; }}
               />
               <Footer>
-                <XpBar />
+                <Experience />
               </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
@@ -192,9 +192,10 @@ export default class NotePanes extends Component {
                     key='button-edit'
                   />
                   <DialogButton
-                    text='Details'
+                    text='Change Colors'
                     onPress={() => {
                         this.paneMenu.dismiss();
+                        this.colorMenu.show();
                     }}
                     key='button-details'
                   />
@@ -255,7 +256,7 @@ export default class NotePanes extends Component {
                     />
                   </Item>
                   <Button
-                    style={styles.buttonStyle}
+                    style={{left:'50%', top:'5%'}}
                     onPress={() => {
                       console.log('EDIT PANE =======', this.state.editPaneTitle);
                       editNotePane(this.state.editPaneTitle, this.state.currentPaneID);
@@ -271,49 +272,73 @@ export default class NotePanes extends Component {
 
               {/* COLOR PICKER DIALOG*/}
               <PopupDialog
-                dialogStyle={{ position: 'absolute', top: '30%' }}
+                dialogStyle={{ position: 'absolute', top: '10%' }}
                 width={0.9}
-                height={0.3}
+                height={0.7}
                 ref={(changeColor) => { this.changeColor = changeColor; }}
                 dialogAnimation={scaleAnimation}
                 dialogTitle={<DialogTitle title='Change Color' />}
-                >
+              >
+                <ColorPicker
+                  style={{flex:1}}
+                  color = {this.state.currentcolor}
+                  onColorChange={(newcolor) => this.state.currentcolor = newcolor}
+                  onColorSelected={(currentcolor) => {
+                    switch(this.state.colorBeingChanged){
+                      case("one"):
+                        this.state.colors.colorone = currentcolor;
+                        this.changeColor.dismiss();
+                        break;
+
+                      case("two"):
+                        this.state.colors.colortwo = currentcolor;
+                        this.changeColor.dismiss();
+                        break;
+
+                      case("background"):
+                        this.state.colors.background = currentcolor;
+                        this.changeColor.dismiss();
+                        break;
+                    }
+                  }}
+                />
 
               </PopupDialog>
 
               {/* COLOR PICKER MENU */}
               <PopupDialog
                 width={0.9}
+                height={0.5}
                 ref={(colorMenu) => { this.colorMenu = colorMenu; }}
                 dialogAnimation={scaleAnimation}
-                dialogTitle={<DialogTitle title={`${this.state.currentPaneName} Menu`} />}
+                dialogTitle={<DialogTitle title="Color Menu" />}
               >
                   <DialogButton
                     text='Primary color'
                     onPress={() => {
-                        deleteNotePane(this.state.currentPaneID);
-                        this.carousel.snapToPrev();
-
-                        this.paneMenu.dismiss();
+                        this.state.colorBeingChanged = "one";
+                        this.colorMenu.dismiss();
+                        this.changeColor.show();
                     }}
-                    key='button-delete'
+                    key='button-primary'
                   />
                   <DialogButton
                     text='Secondary Color'
                     onPress={() => {
-                        //get the new title.
-                        //editNotePane goes here
-                        this.paneMenu.dismiss();
-                        this.editPane.show();
+                      this.state.colorBeingChanged = "two";
+                      this.colorMenu.dismiss();
+                      this.changeColor.show();
                     }}
-                    key='button-edit'
+                    key='button-secondary'
                   />
                   <DialogButton
                     text='Background Color'
                     onPress={() => {
-                        this.paneMenu.dismiss();
+                        this.state.colorBeingChanged = "background";
+                        this.colorMenu.dismiss();
+                        this.changeColor.show();
                     }}
-                    key='button-details'
+                    key='button-background'
                   />
               </PopupDialog>
               </Container>

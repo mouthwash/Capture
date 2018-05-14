@@ -9,10 +9,10 @@ const colorway = {
 };
 
 //Colors actually being used.
-let colorone = colorway.one
-let colortwo = colorway.two
-let colorthree = colorway.three
-let backgroundcolor = colorway.background
+export let colorone = colorway.one
+export let colortwo = colorway.two
+export let colorthree = colorway.three
+export let backgroundcolor = colorway.background
 
 const styles = {
 
@@ -100,7 +100,25 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 350,
-  }
+  },
+  expStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
+  barStyle: {
+    padding: 5,
+    width: '80%',
+    height: 'auto',
+    justifyContent: 'center',
+  },
+
+  levelStyle: {
+    padding: 5,
+    width: '20%',
+    height: 'auto',
+  },
 
 };
 
