@@ -16,7 +16,7 @@ import {
   Text,
   Content
 } from 'native-base';
-import { insertNewNote } from '../database/allSchemas';
+import { insertNewNote, updateXP } from '../database/allSchemas';
 
 //import styles
 import { styles, colorway } from '../styles/stylesheet';
@@ -155,6 +155,7 @@ export default class NewNote extends Component {
                               };
                               console.log('NEW NOTE =======', newNote);
                               insertNewNote(newNote, this.state.paneID);
+                              updateXP();
                                 if (this.state.date_time !== '') {
                                 PushNotification.localNotificationSchedule({
                                   message: 'Note Expiring', // (required)

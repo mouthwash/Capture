@@ -19,7 +19,7 @@ import {
     Input,
     Footer,
 } from 'native-base';
-import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane } from '../database/allSchemas';
+import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane, getXP, createXP } from '../database/allSchemas';
 
 //import styles
 import { styles, colorone, colortwo } from '../styles/stylesheet';
@@ -35,7 +35,9 @@ export default class NotePanes extends Component {
             currentPaneID: 0,
             currentPaneName: '',
             newNoteTitle: '',
-            colors: {colorone: colorone, colortwo: colortwo},
+            currentPercent: 0.0,
+            currentLevel: 1,
+            colors: { colorone: colorone, colortwo: colortwo },
         };
         realm.addListener('change', () => {
           this.reloadData();
@@ -71,6 +73,12 @@ export default class NotePanes extends Component {
       console.log('PANE ID=======', this.state.dataset[0].id);
     }
     });
+    createXP();
+    getXP().then((xpData) => {
+      this.setState({ currentPercent: xpData.xpPercent, currentLevel: xpData.level });
+      //console.log('CONSTRUCTOR ==', this.state.currentPercent);
+      console.log('RELOADDATA=== LEVEL', this.state.currentLevel);
+    });
   }
 
   changedPane = (index) => {
@@ -85,7 +93,13 @@ export default class NotePanes extends Component {
     getNotePanes().then((data) => {
       this.setState({ dataset: data });
     });
+    getXP().then((xpData) => {
+      this.setState({ currentPercent: xpData.xpPercent, currentLevel: xpData.level });
+      console.log('RELOADDATA==', this.state.currentPercent);
+      //console.log('RELOADDATA=== LEVEL', this.state.currentLevel);
+    });
   }
+
     renderItem({ item, index }) {
         return (
             <Card style={styles.cardStyle}>
@@ -161,7 +175,10 @@ export default class NotePanes extends Component {
                 ref={(carousel) => { this.carousel = carousel; }}
               />
             <Footer style={styles.footerStyle}>
-                <Experience />
+                <Experience
+                  currentLevelFromParent={this.state.currentLevel}
+                  currentPercentFromParent={this.state.currentPercent}
+                />
               </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
@@ -269,8 +286,6 @@ export default class NotePanes extends Component {
               {/* END OF Edit Pane ======================================= */}
 
               {/* Start of color picker Dialog */}
-              <PopupDialog>
-              </PopupDialog>
 
               </Container>
         );
