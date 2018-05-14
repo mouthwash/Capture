@@ -2,6 +2,7 @@ import Realm from 'realm';
 
 export const NOTEPANE_SCHEMA = 'NotePane'; //schema name
 export const NOTE_SCHEMA = 'Note'; //schema name
+export const XP_SCHEMA = 'Xp';
 
 //Define models and their properties
 export const NoteSchema = {
@@ -27,9 +28,22 @@ export const NotePaneSchema = {
     notes: { type: 'list', objectType: NOTE_SCHEMA },
   }
 };
+
+export const XpSchema = {
+  name: XP_SCHEMA,
+  primaryKey: 'id',
+  properties: {
+    id: { type: 'int', default: 1 },
+    xpPercent: { type: 'float', default: 0.0 },
+    xpCount: { type: 'int', default: 0 },
+    xpToNext: { type: 'int', default: 20 },
+    level: { type: 'int', default: 1 },
+  }
+};
+
 export const databaseOptions = {
   path: 'Capture.realm',
-  schema: [NoteSchema, NotePaneSchema],
+  schema: [NoteSchema, NotePaneSchema, XpSchema],
   schemaVersion: 0,
 };
 
@@ -115,5 +129,51 @@ export const deleteNote = async (noteID) => {
   }
 };
 
+export const createXP = async () => {
+  const realm = await Realm.open(databaseOptions);
+  try {
+    realm.write(() => {
+      const XPBar = realm.objectForPrimaryKey(XP_SCHEMA, 1);
+      if (XPBar == null) {
+        realm.create(XP_SCHEMA, {
+           id: 1, xpPercent: 0.0, xpCount: 0, xpToNext: 20, level: 1,
+        });
+      }
+    });
+  } catch (err) {
+    console.log('createXPASDSA', err);
+  }
+};
+
+export const updateXP = async () => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    const XPToUpdate = await realm.objectForPrimaryKey(XP_SCHEMA, 1);
+    realm.write(() => {
+    XPToUpdate.xpCount += 10;
+    console.log('XPCOUNTINUPDATE=========', XPToUpdate.xpCount);
+    XPToUpdate.xpPercent = XPToUpdate.xpCount / XPToUpdate.xpToNext;
+    console.log('XPPER=======', XPToUpdate.xpPercent);
+    if (XPToUpdate.xpCount >= XPToUpdate.xpToNext) {
+      XPToUpdate.level++;
+      XPToUpdate.xpCount = 0;
+      XPToUpdate.xpToNext += 20;
+      XPToUpdate.xpPercent = XPToUpdate.xpCount / XPToUpdate.xpToNext;
+    }
+  });
+  } catch (err) {
+    console.log('updateXP', err);
+  }
+};
+
+export const getXP = async () => {
+  try {
+    const realm = await Realm.open(databaseOptions);
+    const XPBar = await realm.objectForPrimaryKey(XP_SCHEMA, 1);
+    return XPBar;
+  } catch (err) {
+    console.log('getXP', err);
+  }
+};
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export default new Realm(databaseOptions);
