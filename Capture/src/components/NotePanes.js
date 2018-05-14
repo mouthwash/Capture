@@ -36,7 +36,7 @@ export default class NotePanes extends Component {
             currentPaneName: '',
             newNoteTitle: '',
             currentPercent: 0.0,
-            currentLevel: 0,
+            currentLevel: 1,
             colors: { colorone: colorone, colortwo: colortwo },
         };
         realm.addListener('change', () => {

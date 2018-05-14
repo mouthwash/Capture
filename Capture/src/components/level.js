@@ -29,6 +29,6 @@ export default class Level extends Component {
           <Text style={styles.levelText}>{this.state.currentLevelState}</Text>
         </Content>
       </Container>
-    )
+    );
   }
 }
