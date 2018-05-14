@@ -110,15 +110,19 @@ export default class NewNote extends Component {
 
                 <Content>
                     {/*Title Input*/}
-                    <TextInput
-                      style = {styles.titleStyle}
-                      autoCorrect
-                      value={this.state.title}
-                      onChangeText={title => this.setState({ title})}
-                      placeholder = 'Title'
-                      placeholderTextColor= {colorway.one}
-                      underlineColorAndroid = 'transparent'
-                      />
+                    <View style={{ alignItems: 'center' }}>
+                      <View style={styles.titleStyle}>
+                        <TextInput
+                          style = {{fontSize: 24}}
+                          autoCorrect
+                          value={this.state.title}
+                          onChangeText={title => this.setState({ title})}
+                          placeholder = 'Title'
+                          placeholderTextColor= {colorway.one}
+                          underlineColorAndroid = 'transparent'
+                          />
+                      </View>
+                    </View>
                     {/*Note Input*/}
                     <TextInput
                         style={styles.inputStyle}
