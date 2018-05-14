@@ -141,7 +141,7 @@ export const createXP = async () => {
       }
     });
   } catch (err) {
-    console.log('createXP', err);
+    console.log('createXPASDSA', err);
   }
 };
 

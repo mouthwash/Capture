@@ -36,6 +36,7 @@ export default class NotePanes extends Component {
             currentPaneName: '',
             newNoteTitle: '',
             currentPercent: 0.0,
+            currentLevel: 0,
             colors: { colorone: colorone, colortwo: colortwo },
         };
         realm.addListener('change', () => {
@@ -74,14 +75,14 @@ export default class NotePanes extends Component {
     });
     createXP();
     getXP().then((xpData) => {
-      this.setState({ currentPercent: xpData.xpPercent });
-      console.log('CONSTRUCTOR ==', this.state.currentPercent);
+      this.setState({ currentPercent: xpData.xpPercent, currentLevel: xpData.level });
+      //console.log('CONSTRUCTOR ==', this.state.currentPercent);
+      console.log('RELOADDATA=== LEVEL', this.state.currentLevel);
     });
   }
 
   changedPane = (index) => {
       this.setState({
-
           currentPaneID: this.state.dataset[index].id,
           currentPaneName: this.state.dataset[index].paneName
       });
@@ -93,8 +94,9 @@ export default class NotePanes extends Component {
       this.setState({ dataset: data });
     });
     getXP().then((xpData) => {
-      this.setState({ currentPercent: xpData.xpPercent });
-      console.log('WHENRELOADDATA PERCENT ==', this.state.currentPercent);
+      this.setState({ currentPercent: xpData.xpPercent, currentLevel: xpData.level });
+      console.log('RELOADDATA==', this.state.currentPercent);
+      //console.log('RELOADDATA=== LEVEL', this.state.currentLevel);
     });
   }
 
@@ -173,7 +175,10 @@ export default class NotePanes extends Component {
                 ref={(carousel) => { this.carousel = carousel; }}
               />
             <Footer style={styles.footerStyle}>
-                <Experience />
+                <Experience
+                  currentLevelFromParent={this.state.currentLevel}
+                  currentPercentFromParent={this.state.currentPercent}
+                />
               </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
@@ -281,8 +286,6 @@ export default class NotePanes extends Component {
               {/* END OF Edit Pane ======================================= */}
 
               {/* Start of color picker Dialog */}
-              <PopupDialog>
-              </PopupDialog>
 
               </Container>
         );

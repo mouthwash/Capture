@@ -24,14 +24,30 @@ import XP_bar from './xpBar';
 import Level from './level';
 
 export default class Experience extends Component {
-  render () {
+
+  constructor(props) {
+      super(props);
+      this.state = {
+          currentPercent: this.props.currentPercentFromParent,
+          currentLevel: this.props.currentLevelFromParent,
+      };
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      currentPercent: this.props.currentPercentFromParent,
+      currentLevel: this.props.currentLevelFromParent,
+    });
+  }
+
+  render() {
     return (
       <Container style={styles.expStyle}>
         <View style={styles.barStyle}>
-          <XP_bar />
+          <XP_bar currentPercentFromEXP={this.state.currentPercent} />
         </View>
         <View style={styles.levelStyle}>
-          <Level />
+          <Level currentLevelFromEXP={this.state.currentLevel} />
         </View>
       </Container>
     );

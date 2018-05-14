@@ -3,7 +3,7 @@ import {Container, Content, Text} from 'native-base';
 import { Dimensions} from 'react-native';
 
 import * as Progress from 'react-native-progress';
-import { getXP, createXP } from '../database/allSchemas';
+import { getXP } from '../database/allSchemas';
 
 import { styles, colorway, colorone, colortwo, backgroundcolor } from '../styles/stylesheet';
 
@@ -12,7 +12,7 @@ export default class xpBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPercentBar: this.props.currentPercentFromParent,
+      currentPercentBar: this.props.currentPercentFromEXP,
     };
     // getXP().then((xpData) => {
     //   this.setState({ currentPercentBar: xpData.xpPercent });
@@ -21,10 +21,14 @@ export default class xpBar extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({ currentPercentBar: this.props.currentPercentFromParent });
+    getXP().then((xpData) => {
+      this.setState({ currentPercentBar: xpData.xpPercent });
+      console.log('WHENRELOADDATA PERCENT ==', this.state.currentPercentBar);
+    });
+    this.setState({ currentPercentBar: this.props.currentPercentFromEXP });
   }
   render() {
-    console.log('PERCENTINXPBAR==========!!!!', this.state.currentPercentBar);
+    // console.log('PERCENTINXPBAR==========!!!!', this.state.currentPercentBar);
     return (
       <Container>
         <Content>
