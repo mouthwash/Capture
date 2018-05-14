@@ -5,6 +5,7 @@ import { Dimensions} from 'react-native';
 import * as Progress from 'react-native-progress';
 import { getXP, createXP } from '../database/allSchemas';
 
+import { styles, colorway, colorone, colortwo, backgroundcolor } from '../styles/stylesheet';
 
 export default class xpBar extends Component {
 
@@ -29,7 +30,10 @@ export default class xpBar extends Component {
         <Content>
           <Progress.Bar
             progress={this.state.currentPercentBar}
-            width={Dimensions.get('window').width}
+            width={null}
+            height={10}
+            color={colortwo}
+            borderColor={backgroundcolor}
           />
         </Content>
       </Container>

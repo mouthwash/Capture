@@ -22,8 +22,8 @@ import {
 import realm, { editNotePane, getNotePanes, insertNewNotePane, deleteNotePane, getXP, createXP } from '../database/allSchemas';
 
 //import styles
-import { styles } from '../styles/stylesheet';
-import XpBar from './xpBar';
+import { styles, colorone, colortwo } from '../styles/stylesheet';
+import Experience from './Experience';
 
 const scaleAnimation = new ScaleAnimation();
 
@@ -36,6 +36,7 @@ export default class NotePanes extends Component {
             currentPaneName: '',
             newNoteTitle: '',
             currentPercent: 0.0,
+            colors: { colorone: colorone, colortwo: colortwo },
         };
         realm.addListener('change', () => {
           this.reloadData();
@@ -171,8 +172,8 @@ export default class NotePanes extends Component {
                 onSnapToItem={this.changedPane}
                 ref={(carousel) => { this.carousel = carousel; }}
               />
-              <Footer>
-                <XpBar currentPercentFromParent={this.state.currentPercent} />
+            <Footer style={styles.footerStyle}>
+                <Experience />
               </Footer>
               {/* PopupDialog for PANE MENU*/}
               <PopupDialog
@@ -277,8 +278,13 @@ export default class NotePanes extends Component {
                     <Text style={styles.textStyle}> Submit </Text>
                   </Button>
               </PopupDialog>
-              {/* END OF LISZT CODE ======================================= */}
-      </Container>
-    );
-  }
+              {/* END OF Edit Pane ======================================= */}
+
+              {/* Start of color picker Dialog */}
+              <PopupDialog>
+              </PopupDialog>
+
+              </Container>
+        );
+    }
 }
