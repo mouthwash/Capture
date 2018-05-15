@@ -55,7 +55,7 @@ export default class ExistingNote extends Component {
           <Body style={styles.positionStyle}>
             <Button transparent>
               <Text style={styles.textStyle}>
-                {this.state.title}
+                Capture
               </Text>
             </Button>
           </Body>
