@@ -71,7 +71,6 @@ const styles = {
   },
 
   titleStyle: {
-    fontSize: 24,
     paddingRight: 15,
     paddingLeft: 15,
     paddingTop: 20,
